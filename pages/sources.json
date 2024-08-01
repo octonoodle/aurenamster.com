@@ -1,0 +1,7 @@
+{
+    "/about" : "/pages/about.html",
+    "/contact" : "/pages/about.html",
+    "/rocketry" : "/pages/about.html",
+    "/programming" : "/pages/about.html",
+    "/" : "/pages/index.html"
+}
