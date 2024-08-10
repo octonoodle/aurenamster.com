@@ -1,31 +1,30 @@
 const fs = require('fs');
 
-// serve normal html 
-function html(file, response) {
+
+// serve a file
+function serveFile(file, response, contentType) {
     fs.readFile('.' + file, function(error, data) {
         if (error) {
             error404(file, response);
         } else {
-            response.writeHead(200, {'Content-Type': 'text/html'});
+            response.writeHead(200, {'Content-Type': contentType});
             response.write(data);
-            console.log('served html ' + file + ' successfully');
+            console.log('served ' + contentType + ' \'' + file + '\' successfully');
         }
         response.end();
     });
 }
 
-// image files
+function html(file, response) {
+    serveFile(file, response, 'text/html');
+}
+
+function js(file, response) {
+    serveFile(file, response, 'text/javascript');
+}
+
 function img(file, extension, response) {
-    fs.readFile('.' + file, function(error, data) {
-        if (error) {
-            error404(file, response);
-        } else {
-            response.writeHead(200, {'Content-Type': 'img/' + extension.substring(1)});
-            response.write(data);
-            console.log('served image ' + file + ' successfully');
-        }
-        response.end();
-    });
+    serveFile(file, response, 'img/' + extension.substring(1));
 }
 
 // errors
@@ -70,6 +69,7 @@ function error503(response) {
 module.exports = {
     html,
     img,
+    js,
     error501,
     error503,
     error404
