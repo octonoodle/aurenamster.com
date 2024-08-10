@@ -4,24 +4,33 @@ const fs = require('fs');
 const port = 80;
 const down = false;
 
+const imgExtensions = ['.png','.jpg'];
+
 const server = http.createServer(function(request, response) {
     // response.write('hello i am serber');
     // response.end();
     
+    console.log('url: ' + request.url);
+
     let i = request.url.lastIndexOf('.');
     if (i > -1) { // file directly requested
         let extension = request.url.substring(i);
-        console.log('url: ' + request.url + ', file type: ' + extension);
+        console.log('serving file type: ' + extension);
 
         if (down) get.error503(response);
 
         // serve simple html
         if (extension === '.html') {
             get.html(request.url, response);
-        } else {
+        } else if (imgExtensions.includes(extension)) {
+            get.img(request.url, extension, response);
+        }
+        
+        else {
             get.error501(extension, response);
         }
     } else { // using extensionless name
+        console.log('(exensionless page)');
         fs.readFile('pages/sources.json', (error, data) => {
             if (error) {
                 console.log('no such file pages/sources.json');

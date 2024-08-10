@@ -8,11 +8,27 @@ function html(file, response) {
         } else {
             response.writeHead(200, {'Content-Type': 'text/html'});
             response.write(data);
-            console.log('served url ' + file + ' successfully');
+            console.log('served html ' + file + ' successfully');
         }
         response.end();
     });
 }
+
+// image files
+function img(file, extension, response) {
+    fs.readFile('.' + file, function(error, data) {
+        if (error) {
+            error404(file, response);
+        } else {
+            response.writeHead(200, {'Content-Type': 'img/' + extension.substring(1)});
+            response.write(data);
+            console.log('served image ' + file + ' successfully');
+        }
+        response.end();
+    });
+}
+
+// errors
 
 function error404(path, response) {
     response.writeHead(404, {'Content-Type': 'text/html'});
@@ -53,6 +69,7 @@ function error503(response) {
 
 module.exports = {
     html,
+    img,
     error501,
     error503,
     error404
