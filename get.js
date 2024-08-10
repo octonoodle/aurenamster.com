@@ -67,6 +67,7 @@ function error503(response) {
 }
 
 module.exports = {
+    serveFile,
     html,
     img,
     js,

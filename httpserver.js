@@ -24,6 +24,11 @@ const server = http.createServer(function(request, response) {
             get.html(request.url, response);
         } else if (imgExtensions.includes(extension)) {
             get.img(request.url, extension, response);
+        } else if (extension === '.js') {
+            get.js(request.url, response);
+        } else if (extension === '.ico') {
+            // website icon
+            get.serveFile('/images/site-logo.ico', response, 'image/vnd.microsoft.icon');
         }
         
         else {
