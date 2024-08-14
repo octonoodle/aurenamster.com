@@ -1,10 +1,12 @@
 const get = require('./get');
+const catPics = require('./images/site-down-cats/get-sad-cat');
+
 const http = require('http');
 const fs = require('fs');
 const port = 80;
 const down = false;
 
-const imgExtensions = ['.png','.jpg'];
+const imgExtensions = ['.png','.jpg','.jpeg'];
 
 const server = http.createServer(function(request, response) {
     // response.write('hello i am serber');
@@ -15,6 +17,7 @@ const server = http.createServer(function(request, response) {
     let i = request.url.lastIndexOf('.');
     if (i > -1) { // file directly requested
         let extension = request.url.substring(i);
+
         console.log('serving file type: ' + extension);
 
         if (down) get.error503(response);
@@ -26,9 +29,6 @@ const server = http.createServer(function(request, response) {
             get.img(request.url, extension, response);
         } else if (extension === '.js') {
             get.js(request.url, response);
-        } else if (extension === '.ico') {
-            // website icon
-            get.serveFile('/images/site-logo.ico', response, 'image/vnd.microsoft.icon');
         }
         
         else {
@@ -36,6 +36,16 @@ const server = http.createServer(function(request, response) {
         }
     } else { // using extensionless name
         console.log('(exensionless page)');
+
+        // special cases 
+        if (request.url === '/404cat') {
+            cat = catPics.getCat();
+            response.writeHead(200, {'Content-Type':'text/plain'});
+            response.write(cat);
+            response.end();
+            return;
+        }
+
         fs.readFile('pages/sources.json', (error, data) => {
             if (error) {
                 console.log('no such file pages/sources.json');

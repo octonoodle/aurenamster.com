@@ -4,12 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File Not Found</title>
+    <style>
+        img {
+            height: 70vh;
+        }
+    </style>
 </head>
 <body>
     <h1>error 404</h1>
     <p>we're so sorry, but the file <strong id='err-file'></strong> could not be found.</p>
     <p>please let us apologize with a nice cat picture: </p>
     <img id="cat-box" src="" alt="a sad cat">
-    <script src="/images/site-down-cats/get-sad-cat.js">getCat()</script>
+    <script >
+        catbox = document.getElementById('cat-box');
+        fetch('/404cat')
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`HTTP error: ${response.status}`);
+            }
+            return response.text();
+        })
+        .then((text) => {
+            catbox.src = text;
+        })
+        .catch((error) => {
+            catbox.alt = 'couldn\'t find the image';
+        })
+    </script>
 </body>
 </html>

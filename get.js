@@ -36,7 +36,6 @@ function error404(path, response) {
             response.write("<h1>404</h1>");
             console.log("failed to fetch 404 page");
         } else {
-            // file404.getElementById('err-file').innerHTML = path;
             response.write(file404);
             console.log('404 error on url ' + path);
         }
