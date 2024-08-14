@@ -1,4 +1,4 @@
 # aurenamster.com
 
 it's a website. go to it.
-[really cool website](https://aurenamster.com)
+[really cool website](http://aurenamster.com)
