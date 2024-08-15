@@ -29,6 +29,8 @@ const server = http.createServer(function(request, response) {
             get.img(request.url, extension, response);
         } else if (extension === '.js') {
             get.js(request.url, response);
+        } else if (extension === '.css') {
+            get.css(request.url, response);
         }
         
         else {

@@ -23,9 +23,15 @@ function js(file, response) {
     serveFile(file, response, 'text/javascript');
 }
 
+function css(file, response) {
+    serveFile(file, response, 'text/css');
+}
+
 function img(file, extension, response) {
     serveFile(file, response, 'img/' + extension.substring(1));
 }
+
+
 
 // errors
 
@@ -70,6 +76,7 @@ module.exports = {
     html,
     img,
     js,
+    css,
     error501,
     error503,
     error404
