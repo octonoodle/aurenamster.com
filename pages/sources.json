@@ -1,7 +1,9 @@
 {
+    "/" : "/pages/index.html",
     "/about" : "/pages/about.html",
     "/contact" : "/pages/contact.html",
     "/rocketry" : "/pages/rocketry.html",
     "/programming" : "/pages/programming.html",
-    "/" : "/pages/index.html"
+    "/other-stuff" : "/pages/other-stuff.html"
+
 }

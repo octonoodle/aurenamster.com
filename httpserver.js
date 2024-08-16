@@ -48,21 +48,22 @@ const server = http.createServer(function(request, response) {
             return;
         }
 
-        fs.readFile('pages/sources.json', (error, data) => {
-            if (error) {
-                console.log('no such file pages/sources.json');
-                throw new Error('404 on ' + request.url);
-            } else {
-                let json = JSON.parse(data);
-                let sourceKey = Object.keys(json).find(str => str === request.url);
-                let page = json[sourceKey];
-                if (page) {
-                    get.html(page, response)
-                } else {
-                    get.error404(page, response);
-                }
-            }
-        })
+        // fs.readFile('pages/sources.json', (error, data) => {
+        //     if (error) {
+        //         console.log('no such file pages/sources.json');
+        //         throw new Error('404 on ' + request.url);
+        //     } else {
+        //         let json = JSON.parse(data);
+        //         let sourceKey = Object.keys(json).find(str => str === request.url);
+        //         let page = json[sourceKey];
+        //         if (page) {
+        //             get.html(page, response)
+        //         } else {
+        //             get.error404(page, response);
+        //         }
+        //     }
+        // })
+        get.html("/pages"+page+".html");
     }
 });
 
