@@ -2,4 +2,23 @@ body {
     background-color: #F7ECD7;
     color: #3323c9;
     font-family: 'Space Grotesk', sans-serif;
+    margin: 0;
+}
+
+a {
+    color: #808080;
+    text-decoration: none;
+}
+
+p {
+    color: #61553d;
+    margin: 10px;
+    margin-left: 20px;
+}
+
+.spacer-bar {
+    margin-left: 20px;
+    height: 8px;
+    width: 300px;
+    background-color: #c0c0c0;
 }
