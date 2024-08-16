@@ -7,9 +7,9 @@ head.innerHTML = head.innerHTML + `<link rel="stylesheet" href="https://api.font
 head.innerHTML = head.innerHTML + `<link rel="stylesheet" href="/styles/default.css">\n`
 
 // insert menu bar
-document.body.innerHTML = 
-`<nav id="menu-bar"></nav>\n` + 
-document.body.innerHTML;
+// document.body.innerHTML = 
+// `<nav id="menu-bar"></nav>\n` + 
+// document.body.innerHTML;
 
 if (typeof jQuery === "undefined") {
     var script = document.createElement('script');
@@ -19,8 +19,8 @@ if (typeof jQuery === "undefined") {
 }
 
 // load menu bar
-window.onload = function() {
-    $(function(){
-      $("#menu-bar").load("/pages/util/menubar.html");
-    });
-}
+// window.onload = function() {
+//     $(function(){
+//       $("#menu-bar").load("/pages/util/menubar.html");
+//     });
+// }
