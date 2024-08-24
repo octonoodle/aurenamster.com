@@ -8,7 +8,7 @@ const down = false;
 
 const imgExtensions = ['.png','.jpg','.jpeg','.gif'];
 
-const server = http.createServer(function(request, response) {
+function serverFunction(request, response) {
     // response.write('hello i am serber');
     // response.end();
     
@@ -72,12 +72,21 @@ const server = http.createServer(function(request, response) {
         // })
         get.html('/pages'+request.url+'.html', response);
     }
-});
+};
 
-server.listen(port, function(error) {
+function listenFunction(error) {
     if (error) {
         console.log('something went wrong, got error' + error);
     } else {
         console.log('server listening on port: ' + port);
     }
-});
+}
+
+const server = http.createServer(serverFunction);
+
+server.listen(port, listenFunction);
+
+module.exports = {
+    serverFunction,
+    listenFunction
+}
