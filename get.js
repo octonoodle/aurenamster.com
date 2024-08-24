@@ -6,6 +6,7 @@ function serveFile(file, response, contentType) {
     fs.readFile('.' + file, function(error, data) {
         if (error) {
             error404(file, response);
+            return;
         } else {
             response.writeHead(200, {'Content-Type': contentType});
             response.write(data);
@@ -31,6 +32,9 @@ function img(file, extension, response) {
     serveFile(file, response, 'img/' + extension.substring(1));
 }
 
+function svg(file, response) {
+    serveFile(file, response, 'image/svg+xml');
+}
 
 
 // errors
@@ -47,7 +51,6 @@ function error404(path, response) {
         }
         response.end();
     });
-    
 }
 
 function error501(extension, response) {
@@ -77,6 +80,7 @@ module.exports = {
     img,
     js,
     css,
+    svg,
     error501,
     error503,
     error404

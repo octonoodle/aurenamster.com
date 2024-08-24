@@ -1,36 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>File Not Found</title>
     <style>
-        img {
-            height: 70vh;
-        }
+      img {
+        height: 70vh;
+      }
     </style>
     <script src="/scripts/load-defaults.js"></script>
-</head>
-<body>
+    <script src="/scripts/load-menu-bar.js"></script>
+  </head>
+  <body>
     <h1>error 404</h1>
-    <p>we're so sorry, but the file <strong id='err-file'></strong> could not be found.</p>
-    <p>please let us apologize with a nice cat picture: </p>
-    <img id="cat-box" src="" alt="a sad cat">
-    <script >
-        catbox = document.getElementById('cat-box');
-        fetch('/404cat')
-        .then((response) => {
+    <p>
+      we're so sorry, but the file <strong id="err-file"></strong> could not be
+      found.
+    </p>
+    <p>please let us apologize with a nice cat picture:</p>
+    <img id="cat-box" src="" alt="a sad cat" />
+    <script>
+      window.addEventListener('load', function () {
+        catbox = document.getElementById("cat-box");
+        fetch("/404cat")
+          .then((response) => {
             if (!response.ok) {
-                throw new Error(`HTTP error: ${response.status}`);
+              throw new Error(`HTTP error: ${response.status}`);
             }
             return response.text();
-        })
-        .then((text) => {
+          })
+          .then((text) => {
             catbox.src = text;
-        })
-        .catch((error) => {
-            catbox.alt = 'couldn\'t find the image';
-        })
+          })
+          .catch((error) => {
+            catbox.alt = "couldn't find the image";
+          });
+      });
     </script>
-</body>
+  </body>
 </html>

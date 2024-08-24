@@ -5,10 +5,148 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rocketry</title>
     <script src="/scripts/load-defaults.js"></script>
+    <script src="/scripts/load-menu-bar.js"></script>
+    <style>
+      #title-spread {
+        position: relative;
+        background-image: url("/images/rocket-table.jpeg");
+        height: 40vw;
+        background-position: center;
+        background-size: cover;
+        color: var(--accent);
+      }
+
+      #heading-highlight {
+        background-color: var(--white);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .buffer {
+        background-color: var(--white);
+        width: 100vw;
+        height: 100px;
+      }
+
+      h1 {
+        margin: 10px;
+      }
+
+      h2 {
+        color: var(--complimentary);
+      }
+
+      p {
+        max-width: 450px;
+      }
+
+      .button {
+        display: inline-block;
+        background-color: var(--dominant);
+        color: #ffffff;
+        padding: 10px;
+        height: 30px;
+        line-height: 30px;
+        font-size: 1.2em;
+        white-space: nowrap;
+        overflow: hidden;
+        margin-top: 5px;
+        border-width: var(--border-width);
+        border-color: var(--border-color);
+        border-style: solid;
+      }
+      object {
+        width: 10vw;
+        border-radius: 5vw;
+        margin: 3vw;
+        padding: 3vw;
+        background-color: #e6d0a9;
+        float: left;
+      }
+
+      img {
+        max-width: 30vw;
+        border: var(--border-color);
+        border-width: var(--border-width);
+        border-style: solid;
+      }
+
+      section {
+        display: inline-flex;
+        align-items: center;
+        width: 94vw;
+        margin: 5px;
+      }
+
+      info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 3;
+        margin: 10px;
+      }
+    </style>
   </head>
   <body>
-    <script src="/scripts/load-menu-bar.js"></script>
-    <p>this is the rocketry page.</p>
-    <br />
+    <div id="title-spread">
+        <div id="heading-highlight">
+            <h1>Rocketry</h1>
+        </div>
+    </div>
+    <div class="buffer"></div>
+    <section>
+      <div class="img-box">
+        <img src="/images/esp32.jpg" alt="esp32 microcontroller" />
+        <div class="caption">ESP-32 microcontroller</div>
+      </div>
+      <info>
+        <h2>Electronics and Software</h2>
+        <p>
+          My rockets often carry my general purpose electronics payload. It
+          collects data such as the rocket's altitude and temperature, and
+          transmits its GPS location using a LoRa radio module.
+        </p>
+        <a href="/rocketry/electronics" class="button"> read more</a>
+      </info>
+    </section>
+    <section>
+      <info>
+        <h2>Rocket Building</h2>
+        <p>
+          I've built a number of rockets with my friends using various materials
+          and techniques. Most of my rockets are custom-designed using a
+          software tool called
+          <a href="http://openrocket.info" target="_blank">Openrocket</a>.
+        </p>
+        <div class="buttons">
+          <a href="/rocketry/meet-the-rockets" class="button"
+            >meet the rockets</a
+          >
+          <a href="/rocketry/launches" class="button">launch archive</a>
+        </div>
+      </info>
+      <div class="img-box">
+        <img src="/images/hector-takeoff.png" alt="launching rocket" />
+        <div class="caption">Héctor takes off on July 10, 2024</div>
+      </div>
+    </section>
+    <section>
+      <div class="img-box">
+        <img src="/images/cad.gif" alt="CAD taking a while" />
+        <div class="caption">CAD Cadding</div>
+      </div>
+      <info>
+        <h2>CAD and 3D Modeling</h2>
+        <p>
+          A lot of rocket parts are very annoying to make by hand (like a
+          nosecone), so I got into CAD to design them for 3D printing. I also
+          integrated a mount for my electronics and extra nose weight right in!
+        </p>
+      </info>
+    </section>
+    <div class="buffer"></div>
   </body>
 </html>

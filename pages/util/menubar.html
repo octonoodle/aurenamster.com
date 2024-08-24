@@ -5,76 +5,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
+
       .menu-bar {
         display: flex;
-        background-color:#ebe0cc;
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
-      }
-      .menu-bar.space-around {
-        justify-content: space-around;
-      }
-      .menu-bar.space-between {
+        background-color: var(--dominant);
         justify-content: space-between;
+        border-width: 0;
+        border-color: var(--border-color);
+        border-bottom-width: var(--border-width);
+        border-style: solid;
       }
-      
+
+      .main-buttons {
+        flex-wrap: wrap;
+      }
+
+      .menu-bar a {
+        display: inline-block;
+      }
+
       h3 {
-        color: #ce2828;
+        color: #ffffff;
         height: auto;
         line-height: auto;
         text-align: center;
-        font-size: 2vw;
-        margin: 1vw;
-        display: inline-block;
-        padding: 0.5vw;
-        border-radius: 5px;
-        font-weight: 300;
+        font-size: 1.5em;
+        display: flex;
+        height: 32px;
+        padding: 4px;
+        padding-right: 9px;
+        padding-left: 9px;
+        margin: 0;
+        font-weight: normal;
       }
       /*
+      #rocketry, #other-stuff h3 {
+        background-color: var(--red);
+      }
+
+      
       #home h3 {
-        color: #3323c9;
+        background-color: var(--blue);
       }
 
       #rocketry h3 {
-        color: #ce2828;
+        background-color: var(--red);
       }
 
       #programming h3 {
-        color: #e28131;
+        background-color: var(--green);
       }
 
-      #about h3 {
-        color: #0f7735;
-      }
-
-      #contact h3 {
-        color: #b3b300;
+      #other-stuff h3 {
+        background-color: var(--orange);
       }
         */
     </style>
   </head>
   <body>
-    
-
     <nav class="menu-bar">
-      <a class="menu-button" id="home" href="/">
-        <h3>home</h3>
-      </a>
-      <a class="menu-button" id="rocketry" href="/rocketry">
-        <h3>rocketry</h3>
-      </a>
-      <a class="menu-button" id="programming" href="/programming">
-        <h3>programming</h3>
-      </a>
-      <a class="menu-button" id="contact" href="/other-stuff">
-        <h3>other stuff</h3>
-      </a>
-      <a class="menu-button" id="about" href="/about">
-        <h3>about</h3>
-      </a>
-      <a class="menu-button" id="contact" href="/contact">
-        <h3>contact</h3>
-      </a>
+      <div class="main-buttons">
+        <a class="menu-button" id="home" href="/"> <h3>home</h3> </a
+        ><a class="menu-button" id="rocketry" href="/rocketry">
+          <h3>rocketry</h3> </a
+        ><a class="menu-button" id="programming" href="/programming">
+          <h3>programming</h3> </a
+        ><a class="menu-button" id="other-stuff" href="/other-stuff">
+          <h3>other stuff</h3>
+        </a>
+      </div>
+      <div class="other-buttons">
+        <a class="menu-button" id="contact" href="/contact">
+          <h3>contact</h3> </a
+        ><a class="menu-button" id="about" href="/about">
+          <h3>about</h3>
+        </a>
+      </div>
     </nav>
   </body>
 </html>

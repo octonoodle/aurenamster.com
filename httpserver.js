@@ -1,12 +1,12 @@
 const get = require('./get');
-const catPics = require('./images/site-down-cats/get-sad-cat');
+const catPics = require('./scripts/get-sad-cat');
 
 const http = require('http');
 const fs = require('fs');
 const port = 80;
 const down = false;
 
-const imgExtensions = ['.png','.jpg','.jpeg'];
+const imgExtensions = ['.png','.jpg','.jpeg','.gif'];
 
 const server = http.createServer(function(request, response) {
     // response.write('hello i am serber');
@@ -31,10 +31,13 @@ const server = http.createServer(function(request, response) {
             get.js(request.url, response);
         } else if (extension === '.css') {
             get.css(request.url, response);
+        } else if (extension === '.svg') {
+            get.svg(request.url, response);
         }
         
         else {
             get.error501(extension, response);
+            console.log('threw 501 (Not Implemented) on file type '+extension);
         }
     } else { // using extensionless name
         console.log('(exensionless page)');
@@ -45,6 +48,10 @@ const server = http.createServer(function(request, response) {
             response.writeHead(200, {'Content-Type':'text/plain'});
             response.write(cat);
             response.end();
+            console.log('served text/plain '+cat);
+            return;
+        } else if (request.url === '/') {
+            get.html('/pages/index.html',response);
             return;
         }
 
@@ -63,7 +70,7 @@ const server = http.createServer(function(request, response) {
         //         }
         //     }
         // })
-        get.html("/pages"+page+".html");
+        get.html('/pages'+request.url+'.html', response);
     }
 });
 

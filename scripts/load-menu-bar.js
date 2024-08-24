@@ -1,9 +1,26 @@
-// insert menu bar
-document.body.innerHTML = 
-`<nav id="menu-bar"></nav>\n` + 
-document.body.innerHTML;
-
 // load menu bar
-$.get("/pages/util/menubar.html", function(data){
-    $("#menu-bar").html(data);
-})
+window.onload = function() {
+    // insert menu bar
+    document.body.innerHTML = 
+    `<nav id="menu-bar"></nav>\n` + 
+    document.body.innerHTML;
+
+    $("#menu-bar").load("/pages/util/menubar.html", colorTheMenu);
+}
+
+function colorTheMenu() {
+    let path = window.location.pathname;
+    let siteSection = path.split('/')[1];
+    if (siteSection === '') {
+        siteSection = 'home'
+    }
+    console.log(path);
+    console.log(siteSection);
+    menu = document.getElementById('menu-bar');
+    text = menu.querySelector(`#${siteSection} h3`);
+    console.log(text);
+    if (text == null) return;
+    text.style.color = 
+    getComputedStyle(document.body)
+    .getPropertyValue('--complimentary');
+}
