@@ -74,18 +74,6 @@ function serverFunction(request, response) {
     }
 };
 
-function listenFunction(error) {
-    if (error) {
-        console.log('something went wrong, got error' + error);
-    } else {
-        console.log('server listening on port: ' + port);
-    }
-}
-
-const server = http.createServer(serverFunction);
-
-//server.listen(port, listenFunction);
-
 module.exports = {
     serverFunction
 }
