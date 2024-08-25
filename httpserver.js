@@ -84,9 +84,8 @@ function listenFunction(error) {
 
 const server = http.createServer(serverFunction);
 
-server.listen(port, listenFunction);
+//server.listen(port, listenFunction);
 
 module.exports = {
-    serverFunction,
-    listenFunction
+    serverFunction
 }
