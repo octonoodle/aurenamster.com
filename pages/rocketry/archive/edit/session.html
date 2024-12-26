@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>edit session</title>
+    <script src="/scripts/client/load-defaults.js"></script>
+    <script src="/scripts/client/load-menu-bar.js"></script>
+    <style>
+      #synopsis {
+        width: 60vw;
+        font-family: "Space Grotesk";
+      }
+
+      .synopsis,
+      #synopsis {
+        display: inline-block;
+        margin: 0.5em;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>edit session info</h1>
+    <form action="" method="post" id="main">
+      <label for="date">date: </label>
+      <input type="date" id="date-input" />
+      <input type="hidden" name="date" id="date">
+      <br />
+      <h2 class="synopsis">synopsis</h2>
+      <div>
+        <h3 class="synopsis">old:</h3>
+        <p class="synopsis">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae,
+          laboriosam?
+        </p>
+      </div>
+      <div>
+        <h3 class="synopsis">new:</h3>
+        <input type="text" name="synopsis" id="synopsis" />
+      </div>
+
+      <h2>description</h2>
+      <h3>old:</h3>
+      <p class="description">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa nisi, eum
+        distinctio temporibus possimus commodi error ratione. Debitis voluptate,
+        dolore vero corrupti, nihil saepe recusandae cum explicabo inventore
+        illo voluptatibus rem odit perspiciatis totam doloribus harum tenetur
+        eum quasi? Debitis repudiandae eos vel corporis voluptatibus corrupti
+        aliquid tempore magnam voluptatum?
+      </p>
+      <h3>new:</h3>
+
+      <textarea name="description" id="description"></textarea>
+      <br />
+      <button type="button" onclick="formatSubmit()" class="button-link">
+        submit
+      </button>
+      <a href="" class="button-link">back</a>
+    </form>
+
+    <script>
+      // parse session id
+      let params = new URLSearchParams(location.search);
+      let sessionID = params.get("id");
+      $("form").attr(
+        "action",
+        "/api/edit/launch_sessions/session_id/" + sessionID
+      );
+      $.get(
+        "/api/read/match/launch_sessions/session_id/" + sessionID,
+        (sessions) => {
+          let session = sessions[0];
+          // insert old data
+          $(".description").html(session.description);
+          $("#description").html(session.description);
+          $("p.synopsis").html(session.synopsis);
+          $("#synopsis").attr("value", session.synopsis);
+          setTimeout(function () {
+            let date = new Date(session.date);
+            document.getElementById("date-input").value =
+              date.toLocaleDateString("en-CA");
+          }, 10);
+        }
+      );
+      $("a").attr("href", "/rocketry/archive/view?id=" + sessionID);
+
+      function formatSubmit() {
+        addEscapeChars("synopsis");
+        addEscapeChars("description");
+        $("#date").val($("#date-input").val());
+        addEscapeChars("date");
+        document.getElementById("main").submit();
+      }
+    </script>
+  </body>
+</html>

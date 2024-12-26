@@ -1,19 +1,22 @@
 :root {
     /* site core color palette */
-    --dominant: #0047ab;
-    --complimentary: #E03616;
-    --accent: #272932;
+    --dominant: hsl(215, 100%, 34%);
+    --complimentary: hsl(10, 82%, 48%);
+    --accent: hsl(229, 12%, 17%);
 
-    --red: #F05D5E;
-    --white: #E7ECEF;
+    /* relative colors */
+    --complimentary-fill: hsl(10, 82%, 78%);
+
+    --red: hsl(360, 83%, 65%);
+    --white: hsl(202, 20%, 92%);
     
-    --blue: #0047ab;
-    --green: #4c952a;
-    --orange: #ff984a;
-    --brown: #60503D;
+    --blue: hsl(215, 100%, 34%);
+    --green: hsl(101, 56%, 37%);
+    --orange: hsl(26, 100%, 65%);
+    --brown: hsl(33, 22%, 31%);
 
     --border-width: 3px;
-    --border-color: #000000;
+    --border-color: hsl(0, 0%, 0%);
 }
 
 body {
@@ -48,3 +51,24 @@ p {
     width: 300px;
     background-color: var(--accent);
 }
+
+/* nice looking button links */
+.button-link {
+    display: inline-flex;
+    background-color: var(--dominant);
+    color: #ffffff;
+    padding: 10px;
+    line-height: 30px;
+    font-size: 1.2em;
+    font-family: 'Space Grotesk';
+    white-space: nowrap;
+    overflow: hidden;
+    border-width: var(--border-width);
+    border-color: var(--border-color);
+    border-style: solid;
+  }
+
+  form textarea {
+    width: 70vw;
+    height: 30vh;
+  }

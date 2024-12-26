@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="/scripts/api-client/edit.js"></script>
+    <script src="/scripts/api-client/submit.js"></script>
+    <style>
+      #comments {
+        width: 50vw;
+        height: 30vh;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>api page</h1>
+    <form id="general" action="/api/edit" method="POST">
+      <h2>create new launch session</h2>
+      <h3>general info</h3>
+      <label for="date">date: </label>
+      <input type="date" id="date" name="session_date" />
+      <label for="launchsite">launch site: </label>
+      <select name="launch_site" id="launchsite">
+        <option value="park 1">park 1</option>
+        <option value="park 2">park 2</option>
+      </select>
+      <br />
+      <label for="comments">comments: </label>
+      <br />
+      <textarea name="session_description" id="comments"></textarea>
+
+      <h3>launches</h3>
+      <div class="multirow-form-fragmemt">
+        <button type="button" onclick="addLaunchSection()">new launch</button>
+        <div id="launch-list"></div>
+      </div>
+
+      <h3>objectives</h3>
+      <div class="multirow-form-fragmemt">
+        <button type="button" onclick="addObjectiveSection()">
+          new objective
+        </button>
+        <div id="objective-list"></div>
+      </div>
+      <br />
+      <input type="hidden" name="source" value="edit">
+      <input type="hidden" name="operation" value="create">
+      <button type="button" onclick="submitForm()">submit new session</button>
+    </form>
+  </body>
+  <script>loadLaunchSiteOptions();</script>
+</html>

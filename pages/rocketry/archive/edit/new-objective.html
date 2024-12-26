@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>create objective</title>
+    <script src="/scripts/client/load-defaults.js"></script>
+    <script src="/scripts/client/load-menu-bar.js"></script>
+    <style>
+        form label,form select,form input {
+            margin: 1em;
+        }
+    </style>
+  </head>
+  <body>
+    <h1>new objective</h1>
+    <form action="/api/create/launch_objectives" method="post">
+      <label for="success">successful?</label>
+      <select name="success" id="success">
+        <option value="true">yes</option>
+        <option value="false">no</option>
+      </select>
+      <br />
+      <label for="objective_id">choose an objective: </label>
+      <select name="objective_id" id="objective_id">
+        <option value="-34">objective 1</option>
+        <option value="-33">objective 2</option>
+        <option value="-32">objective 3</option>
+      </select>
+      <br />
+      <button type="submit" class="button-link">submit</button>
+      <input type="hidden" name="session_id" id="sessionID" />
+    </form>
+    <script>
+      let params = new URLSearchParams(location.search);
+      let sessionID = params.get("id");
+      $("#sessionID").attr("value", sessionID);
+      $("#objective_id").html("");
+      $.get("/api/read/all/objectives", (objectives) => {
+        for (objective of objectives) {
+          $("#objective_id").append(
+            '<option value="' +
+              objective.objective_id +
+              '">' +
+              objective.description +
+              "</option>"
+          );
+        }
+      });
+      $("form").append(
+        '<a class="button-link" href="/rocketry/archive/edit/objectives?id=' +
+          sessionID +
+          '">back</a>'
+      );
+    </script>
+  </body>
+</html>

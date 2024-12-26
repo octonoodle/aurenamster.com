@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>viewing launch</title>
+    <script src="/scripts/client/load-defaults.js"></script>
+    <script src="/scripts/client/load-menu-bar.js"></script>
+    <script src="/scripts/archive/view.js"></script>
+    <style>
+      h1 {
+        font-size: 6vw;
+      }
+
+      #return-link {
+        font-size: 20px;
+      }
+
+      #menu {
+        padding: 0.5em;
+        display: flex;
+        align-items: center;
+        flex-direction: row-reverse;
+        justify-content: space-around;
+        width: 100%;
+      }
+
+      section {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+      }
+
+      .thumbnail {
+        width: 40%;
+        min-width: 300px;
+      }
+
+      #thumbnail {
+        width: 100%;
+      }
+
+      .description {
+        width: 60%;
+        min-width: 300px;
+      }
+
+      .launches {
+        width: 66%;
+        min-width: 400px;
+      }
+
+      .objectives {
+        width: 30%;
+        min-width: 200px;
+        padding: 2%;
+      }
+
+      #launches {
+        width: 100%;
+      }
+
+      #images {
+        background-color: white;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      li {
+        text-align: left;
+      }
+
+      yay {
+        color: green;
+      }
+
+      boo {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="menu">
+      <a id="return-link" class="button-link" href="/rocketry/archive">back</a>
+    </div>
+    <section>
+      <div class="thumbnail">
+        <img id="thumbnail" src="/images/img-not-found.jpg" />
+      </div>
+      <div class="description">
+        <h2>description</h2>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem
+          reprehenderit sint suscipit, similique exercitationem consectetur
+          perferendis assumenda dolorem culpa eaque aperiam, consequuntur
+          veritatis sequi modi quia eligendi alias, nostrum eos.
+        </p>
+      </div>
+    </section>
+    <section>
+      <div class="launches">
+        <h2>launches</h2>
+        <table id="launches">
+          <tr>
+            <th>time</th>
+            <th>rocket</th>
+            <th>motor</th>
+            <th>altitude (m)</th>
+          </tr>
+        </table>
+      </div>
+      <div class="objectives">
+        <h2>objectives</h2>
+        <ol id="objectives">
+          <li>objective1</li>
+          <li>objective1</li>
+          <li>objective1</li>
+        </ol>
+      </div>
+    </section>
+    <div id="images">images</div>
+    <script>
+      loadAll();
+    </script>
+  </body>
+</html>

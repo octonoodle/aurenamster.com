@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>sending request to the server...</title>
+    <script src="/scripts/client/load-defaults.js"></script>
+  </head>
+  <body>
+    <script>
+      let params = new URLSearchParams(location.search);
+      let endpoint = "/api";
+      endpoint += "/" + params.get("action");
+      let type = params.get("type");
+      switch (type) {
+        case "session":
+          endpoint += "/launch_sessions";
+          break;
+        case "launch":
+          endpoint += "/launches";
+          break;
+        case "objective":
+          endpoint += "/launch_objectives";
+          break;
+      }
+      endpoint += "/" + params.get("id");
+      document.body.innerHTML = endpoint;
+    </script>
+  </body>
+</html>

@@ -5,7 +5,7 @@ window.onload = function() {
     `<nav id="menu-bar"></nav>\n` + 
     document.body.innerHTML;
 
-    $("#menu-bar").load("/pages/util/menubar.html", colorTheMenu);
+    $("#menu-bar").load("/pages/util/menubar.html style,.menu-bar > ", colorTheMenu);
 }
 
 function colorTheMenu() {
@@ -14,11 +14,8 @@ function colorTheMenu() {
     if (siteSection === '') {
         siteSection = 'home'
     }
-    console.log(path);
-    console.log(siteSection);
     menu = document.getElementById('menu-bar');
     text = menu.querySelector(`#${siteSection} h3`);
-    console.log(text);
     if (text == null) return;
     text.style.color = 
     getComputedStyle(document.body)

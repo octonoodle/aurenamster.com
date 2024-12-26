@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rocketry</title>
-    <script src="/scripts/load-defaults.js"></script>
-    <script src="/scripts/load-menu-bar.js"></script>
+    <script src="/scripts/client/load-defaults.js"></script>
+    <script src="/scripts/client/load-menu-bar.js"></script>
     <style>
       #title-spread {
         position: relative;
@@ -42,21 +42,10 @@
         max-width: 450px;
       }
 
-      .button {
-        display: inline-block;
-        background-color: var(--dominant);
-        color: #ffffff;
-        padding: 10px;
-        height: 30px;
-        line-height: 30px;
-        font-size: 1.2em;
-        white-space: nowrap;
-        overflow: hidden;
+      .button-link {
         margin-top: 5px;
-        border-width: var(--border-width);
-        border-color: var(--border-color);
-        border-style: solid;
       }
+      
       object {
         width: 10vw;
         border-radius: 5vw;
@@ -109,7 +98,7 @@
           collects data such as the rocket's altitude and temperature, and
           transmits its GPS location using a LoRa radio module.
         </p>
-        <a href="/rocketry/electronics" class="button"> read more</a>
+        <a href="/rocketry/electronics" class="button-link">read more</a>
       </info>
     </section>
     <section>
@@ -122,10 +111,10 @@
           <a href="http://openrocket.info" target="_blank">Openrocket</a>.
         </p>
         <div class="buttons">
-          <a href="/rocketry/meet-the-rockets" class="button"
+          <a href="/rocketry/meet-the-rockets" class="button-link"
             >meet the rockets</a
           >
-          <a href="/rocketry/launches" class="button">launch archive</a>
+          <a href="/rocketry/archive" class="button-link">launch archive</a>
         </div>
       </info>
       <div class="img-box">
@@ -146,6 +135,18 @@
           integrated a mount for my electronics and extra nose weight right in!
         </p>
       </info>
+    </section>
+    <section>
+      <info>
+        <h2>rocketry club</h2>
+        <p>i like rockets <em>so much</em> in fact, that i created a rocketry club
+        at my school to build a team for The American Rocketry Competition.</p>
+        <a href="/rocketry/club" class="button-link">rocketry club</a>
+      </info>
+      <div class="img-box">
+        <img src="/images/img-not-found.jpg" alt="relevant rocketry club image">
+        <div class="caption">relevant rocketry club image here</div>
+      </div>
     </section>
     <div class="buffer"></div>
   </body>

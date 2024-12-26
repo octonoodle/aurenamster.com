@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>create launch</title>
+    <script src="/scripts/client/load-defaults.js"></script>
+    <script src="/scripts/client/load-menu-bar.js"></script>
+    <style>
+      label,
+      p,
+      option {
+        display: inline-block;
+        margin: 0.5em;
+      }
+      input[type="radio"] {
+        display: none;
+      }
+
+      #yes-altitude,
+      #no-altitude {
+        display: inline-block;
+        width: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>add launch</h1>
+    <form action="/api/create/launches" method="post" id="main">
+      <label for="time">launch time: </label>
+      <input type="time" id="time-input" required /><br />
+      <input type="hidden" name="time" id="time" />
+      <label for="rocket-input">launched rocket: </label>
+      <select id="rocket-input" required>
+        <option value="rocket1">rocket1</option>
+        <option value="rocket2">rocket2</option>
+        <option value="rocket3">rocket3</option>
+      </select>
+      <input type="hidden" name="rocket" id="rocket">
+      <br />
+      <label for="motor">rocket motor: </label>
+      <select name="motor_id" id="motor" required>
+        <option value="motor1">motor1</option>
+        <option value="motor2">motor2</option>
+        <option value="motor3">motor3</option>
+      </select>
+      <br />
+      <p>define altitude?</p>
+      <div id="yes-altitude"><strong>yes</strong></div>
+      <div id="no-altitude">no</div>
+      <br />
+      <label for="altitude_m">altitude (m): </label>
+      <input type="number" name="altitude_m" id="altitude" value="0" required />
+      <br />
+      <button
+        type="button"
+        onclick="formatSubmit()"
+        class="button-link"
+        id="submit-button"
+      >
+        submit
+      </button>
+    </form>
+    <script>
+      let params = new URLSearchParams(location.search);
+      let sessionID = params.get("id");
+      let definedAltitude = true;
+      $(document).ready(() => {
+        let now = new Date();
+        // don't ask
+        setTimeout(function () {
+          document.getElementById("time-input").value =
+            now.toLocaleTimeString("it-IT");
+        }, 10);
+
+        $("form").append(
+          '<input type="hidden" name="session_id" id="session_id" value="' +
+            sessionID +
+            '"/>'
+        );
+
+        $(document).on("click", "#yes-altitude", () => {
+          if (!definedAltitude) {
+            $("#submit-button").before(
+              '<label for="altitude_m">altitude (m): </label>'
+            );
+            $("#submit-button").before(
+              '<input type="number" name="altitude_m" id="altitude" value=0 required/>'
+            );
+            $("#submit-button").before("<br />");
+            $("#yes-altitude").html("<strong>yes</strong>");
+            $("#no-altitude").html("no");
+            definedAltitude = true;
+          }
+        });
+        $(document).on("click", "#no-altitude", () => {
+          if (definedAltitude) {
+            $("#altitude").remove();
+            $('label[for="altitude_m"]').remove();
+            $("#submit-button").prev().remove(); // <br>
+            $("#no-altitude").html("<strong>no</strong>");
+            $("#yes-altitude").html("yes");
+            definedAltitude = false;
+          }
+        });
+
+        $("form").append('<a href="" class="button-link">back</a>');
+        $("a").attr("href", "/rocketry/archive/edit/launches?id=" + sessionID);
+        // populate form with data
+        $.get("/api/read/all/rockets", (rockets) => {
+          $("#rocket-input").empty();
+          for (rocket of rockets) {
+            $("#rocket-input").append(
+              '<option value="' +
+                rocket.rocket_name +
+                '">' +
+                rocket.rocket_name +
+                "</option>"
+            );
+          }
+        });
+        $.get("/api/read/all/motors", (motors) => {
+          $("#motor").empty();
+          for (motor of motors) {
+            $("#motor").append(
+              '<option value="' +
+                motor.motor_id +
+                '">' +
+                motor.motor_name +
+                "</option>"
+            );
+          }
+        });
+        setTimeout(function () {
+          $("#session_id").val(sessionID);
+        }, 10);
+      });
+
+      function formatSubmit() {
+        $("#rocket").val($("#rocket-input").val());
+        addEscapeChars("rocket");
+        $("#time").val($("#time-input").val());
+        addEscapeChars("time");
+        document.getElementById("main").submit();
+      }
+    </script>
+  </body>
+</html>

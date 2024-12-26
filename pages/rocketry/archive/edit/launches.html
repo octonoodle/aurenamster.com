@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>edit launches</title>
+    <script src="/scripts/client/load-defaults.js"></script>
+    <script src="/scripts/client/load-menu-bar.js"></script>
+    <script src="/scripts/archive/view.js"></script>
+    <style>
+      table {
+        background-color: black;
+        width: 96%;
+        margin: 2%;
+      }
+
+      th,
+      td {
+        background-color: var(--white);
+      }
+
+      ul {
+        text-align: left;
+        margin-top: 0.1em;
+        margin-bottom: 0.1em;
+      }
+
+      table a {
+        height: min-content;
+      }
+
+      .delete a {
+        background-color: crimson;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>edit launches</h1>
+    <table id="launches">
+      <tr id="column-labels">
+        <th class="time">time</th>
+        <th class="rocket">rocket</th>
+        <th class="motor">motor</th>
+        <th class="altitude">altitude (m)</th>
+        <th class="link"></th>
+      </tr>
+    </table>
+    <a id="new-launch-link" class="button-link">add launch</a>
+    <a href="" class="button-link" id="return-link">back</a>
+    <script>
+      // parse session id
+      let params = new URLSearchParams(location.search);
+      let sessionID = params.get("id");
+      loadLaunches(sessionID, () => {
+        // add edit and delete links
+        $("tr:not(#column-labels)")
+          .append('<td><a class="button-link">edit</a></td>')
+          .each((num, element) => {
+            let href =
+              "/rocketry/archive/edit/launch?id=" +
+              element.id.replace("launch", "");
+            $("#" + element.id + " a").attr("href", href);
+          });
+        $("#column-labels").append('<th class="delete"></th>');
+        $("#launches tr").each((i, row) => {
+          if (i === 0) {
+            return;
+          }
+          $(row).append(
+            '<td class="delete"><a class="button-link" href=/rocketry/archive/delete?table=launches' +
+              "&column=launch_id&value=" +
+              $(row).attr("id").replace("launch", "") +
+              ">delete</a></td>"
+          );
+        });
+      });
+      $("#return-link").attr("href", "/rocketry/archive/view?id=" + sessionID);
+      $("#new-launch-link").attr(
+        "href",
+        "/rocketry/archive/edit/new-launch?id=" + sessionID
+      );
+    </script>
+  </body>
+</html>

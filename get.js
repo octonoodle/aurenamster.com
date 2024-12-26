@@ -10,7 +10,7 @@ function serveFile(file, response, contentType) {
         } else {
             response.writeHead(200, {'Content-Type': contentType});
             response.write(data);
-            console.log('served ' + contentType + ' \'' + file + '\' successfully');
+            console.log('[get] served ' + contentType + ' \'' + file + '\' successfully');
         }
         response.end();
     });
@@ -44,20 +44,21 @@ function error404(path, response) {
     fs.readFile('pages/util/404.html', (error, file404) => {
         if (error) {
             response.write("<h1>404</h1>");
-            console.log("failed to fetch 404 page");
+            console.log("[get/404] failed to fetch 404 page");
         } else {
             response.write(file404);
-            console.log('404 error on url ' + path);
+            console.log('[get/404] 404 error on url ' + path);
         }
         response.end();
     });
 }
 
-function error501(extension, response) {
-    response.writeHead(501, {'Content-Type': 'text/html'});
-    response.write('<h1>501</h1>')
-    response.write('<p>server error: cannot process ' + extension + ' file</p>');
+function error415(extension, response) {
+    response.writeHead(415, {'Content-Type': 'text/html'});
+    response.write('<h1>415</h1>')
+    response.write('<p>server error: cannot process .' + extension + ' file</p>');
     response.end();
+    console.log('[get/415] refused to serve file with extension .' + extension)
 }
 
 function error503(response) {
@@ -71,9 +72,21 @@ function error503(response) {
         response.end();
     });
     
-    console.log('ignored url ' + request.url + ' during server maintenance');
+    console.log('[get/503] ignored url ' + request.url + ' during server maintenance');
 }
 
+function error405(response) {
+    response.writeHead(405);
+    response.end();
+}
+
+
+// other helpful functions
+
+function redirect(target, response) {
+    response.writeHead(301, {'Content-Type': 'text/plain', location: target});
+    response.end();
+}
 module.exports = {
     serveFile,
     html,
@@ -81,7 +94,9 @@ module.exports = {
     js,
     css,
     svg,
-    error501,
+    error415,
     error503,
-    error404
+    error404,
+    error405,
+    redirect
 };

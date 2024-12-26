@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>launch archive</title>
+    <script src="/scripts/client/load-defaults.js"></script>
+    <script src="/scripts/client/load-menu-bar.js"></script>
+    <style>
+      #subtitle-area {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-left: 10%;
+        margin-right: 10%;
+      }
+
+      #subtitle-area a {
+        flex-shrink: 0;
+        height: min-content;
+      }
+
+      #key {
+        font-style: italic;
+        display: flex;
+        align-items: baseline;
+        width: 80%;
+        margin-left: 10%;
+        margin-right: 10%;
+        justify-content: left;
+        text-wrap: balance;
+      }
+
+      #key h2 {
+        float: left;
+      }
+
+      #key .date {
+        margin-left: 1em;
+      }
+
+      #key ul {
+        padding: 0;
+      }
+
+      #key li,
+      #key h2,
+      #key p {
+        display: inline-block;
+        margin: 0;
+      }
+
+      table {
+        background-color: black;
+        width: 96%;
+        margin: 2%;
+      }
+
+      th,
+      td {
+        background-color: var(--white);
+      }
+
+      ul {
+        text-align: left;
+        margin-top: 0.1em;
+        margin-bottom: 0.1em;
+      }
+
+      .link a,.delete a {
+        padding: 0.3em;
+      }
+
+      .link,.delete {
+        padding: 0.5em;
+      }
+
+      .date {
+        font-weight: 700;
+      }
+
+      .success .date {
+        color: green;
+      }
+
+      .partial-success .date {
+        color: gold;
+      }
+
+      .failure .date {
+        color: crimson;
+      }
+
+      .inconclusive .date {
+        color: darkslategrey;
+      }
+
+      yay {
+        color: green;
+      }
+
+      boo {
+        color: red;
+      }
+
+      .delete a {
+        background-color: crimson;
+        /* padding-left: 0.7em;
+        padding-right: 0.7em; */
+      }
+    </style>
+  </head>
+  <body>
+    <h1>launch archive</h1>
+    <div id="subtitle-area">
+      <p>
+        a somewhat comprehensive list of all the rocket launches my friends and
+        i have completed to date.
+      </p>
+    </div>
+    <div id="key">
+      <h2>key:</h2>
+      <ul>
+        <li class="success">
+          <p class="date">green</p>
+          <p>: success</p>
+        </li>
+        <li class="partial-success">
+          <p class="date">yellow</p>
+          <p>: partial success</p>
+        </li>
+        <li class="inconclusive">
+          <p class="date">gray</p>
+          <p>: inconclusive or n/a</p>
+        </li>
+        <li class="failure">
+          <p class="date">red</p>
+          <p>: abject failure</p>
+        </li>
+      </ul>
+    </div>
+    <table id="launches">
+      <tr id="table-head">
+        <th class="date">date</th>
+        <th class="synopsis">summary</th>
+        <th class="rockets">rocket(s)</th>
+        <th class="objectives">objective(s)</th>
+        <th class="link"></th>
+      </tr>
+
+      <!-- <tr id="template" class="partial-success">
+        <td class="date">date</td>
+        <td class="synopsis">asdkjasdflasdlfasdf</td>
+        <td class="rockets">
+          <ul>
+            <li>Rocket1</li>
+            <li>Rocket2</li>
+          </ul>
+        </td>
+        <td>
+          <ul class="objecives">
+            <li id="objective1">the good objective: <yay>success</yay></li>
+          </ul>
+        </td>
+      </tr> -->
+    </table>
+    <a class="button-link" href="/rocketry/archive/login">login</a>
+    <script src="/scripts/archive/archive.js"></script>
+  </body>
+</html>

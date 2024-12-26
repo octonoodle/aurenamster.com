@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>add launch session</title>
+    <script src="/scripts/client/load-defaults.js"></script>
+    <script src="/scripts/client/load-menu-bar.js"></script>
+    <style>
+      #synopsis {
+        width: 70vw;
+      }
+
+      p {
+        display: inline-block;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>add launch session</h1>
+    <form action="/api/create/launch_sessions" method="POST" id="main">
+      <section>
+        <label for="date-input" id="date-label">date</label>
+        <input type="date" id="date-input" />
+        <input type="hidden" name="date" id="date" />
+      </section>
+      <section>
+        <label for="synopsis">synopsis</label>
+        <input type="text" name="synopsis" id="synopsis" />
+      </section>
+      <section>
+        <label for="description">description</label>
+        <textarea name="description" id="description"></textarea>
+      </section>
+      <div>
+        <button type="button" onclick="formatSubmit()" class="button-link">
+          submit
+        </button>
+        <a href="/rocketry/archive" class="button-link">back</a>
+      </div>
+    </form>
+  </body>
+  <script>
+    let now = new Date();
+    // don't ask
+    setTimeout(function () {
+      document.getElementById("date-input").value =
+        now.toLocaleDateString("en-CA");
+    }, 10);
+
+    function formatSubmit() {
+      addEscapeChars("synopsis");
+      addEscapeChars("description");
+      $("#date").val($("#date-input").val());
+      addEscapeChars("date");
+      document.getElementById("main").submit();
+    }
+  </script>
+</html>

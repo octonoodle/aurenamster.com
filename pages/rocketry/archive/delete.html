@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>deletion confirmation</title>
+    <script src="/scripts/client/load-defaults.js"></script>
+    <script src="/scripts/client/load-menu-bar.js"></script>
+    <style>
+      form a {
+        margin-top: 2em;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>confirm deletion</h1>
+    <form action="/api/delete" method="post"></form>
+    <script>
+      let params = new URLSearchParams(location.search);
+      let table = params.get("table");
+      let column = params.get("column");
+      let value = params.get("value");
+      $("form").attr(
+        "action",
+        "/api/delete/" + table + "/" + column + "/" + value
+      );
+      function createSubmitButton() {
+        $("form").append('<br class="submit">');
+        $("form").append(
+          '<button type="submit" class="submit">submit</button>'
+        );
+      }
+      function removeSubmitButton() {
+        $(".submit").remove();
+      }
+
+      function createReallySure() {
+        $("form").append('<br class="really-sure">');
+        $("form").append(
+          '<label for="really-sure" class="really-sure">really sure?</label>'
+        );
+        let reallySure = $("form").append(
+          '<input type="checkbox" name="really-sure" id="really-sure" class="really-sure"/>'
+        );
+        $(document).on("click", "#really-sure", function () {
+          if (reallySure.val()) {
+            removeSubmitButton();
+            reallySure.val(false);
+          } else {
+            createSubmitButton();
+            reallySure.val(true);
+          }
+        });
+      }
+
+      function removeReallySure() {
+        $(".really-sure").remove();
+      }
+
+      function createSure() {
+        $("form").append('<label for="sure">are you sure?</label>');
+        let sure = $("form").append(
+          '<input type="checkbox" name="sure" id="sure"/>'
+        );
+        $(document).on("click", "#sure", function () {
+          console.log("click!");
+          if (sure.val()) {
+            removeReallySure();
+            sure.val(false);
+          } else {
+            createReallySure();
+            sure.val(true);
+          }
+        });
+      }
+      if (table === "launches" || table === "launch_objectives") {
+        createReallySure();
+      } else {
+        createSure();
+      }
+
+      let backURL = "";
+      function makeBackButton() {
+        $("h1").after(
+          '<a class="button-link" href="/rocketry/archive' +
+            backURL +
+            '">back</a>'
+        );
+      }
+
+      if (table === "launch_objectives") {
+        $.get(
+          "/api/read/match/launch_objectives/" + column + "/" + value,
+          (objectives) => {
+            if (objectives && objectives[0] && objectives[0].session_id) {
+              backURL = "/edit/objectives?id=" + objectives[0].session_id;
+              makeBackButton();
+            } else {
+              makeBackButton();
+            }
+          }
+        );
+      } else if (table === "launches") {
+        $.get(
+          "/api/read/match/launches/" + column + "/" + value,
+          (launches) => {
+            if (launches && launches[0] && launches[0].session_id) {
+              backURL = "/edit/launches?id=" + launches[0].session_id;
+              makeBackButton();
+            } else {
+              makeBackButton();
+            }
+          }
+        );
+      }
+
+      if (table === "launch_sessions") {
+        $.get(
+          "/api/read/match/launch_sessions/session_id/" + value,
+          (sessions) => {
+            $("h1").after(
+              "<p>synopsis: <strong>" + sessions[0].synopsis + "</strong></p>"
+            );
+            writeOtherInfo();
+          }
+        );
+      } else if (table === "launches") {
+        $.get("/api/read/match/launches/launch_id/" + value, (launches) => {
+          $("h1").after(
+            "<p>rocket: <strong>" + launches[0].rocket + "</strong></p>"
+          );
+          writeOtherInfo();
+        });
+      } else if (table === "objectives") {
+        $.get(
+          "/api/read/match/objectives/objective_id/" + value,
+          (objectives) => {
+            $("h1").after(
+              "<p>objective: <strong>" +
+                objectives[0].objective_description +
+                "</strong></p>"
+            );
+            writeOtherInfo();
+          }
+        );
+      }
+      function writeOtherInfo() {
+        $("h1").after("<p>value: <strong>" + value + "</strong></p>");
+        $("h1").after("<p>table: <strong>" + table + "</strong></p>");
+      }
+    </script>
+  </body>
+</html>

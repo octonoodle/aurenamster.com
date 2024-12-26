@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>edit objectives</title>
+    <script src="/scripts/client/load-defaults.js"></script>
+    <script src="/scripts/client/load-menu-bar.js"></script>
+    <script src="/scripts/archive/view.js"></script>
+    <style>
+      li {
+        width: fit-content;
+        margin: 1em;
+      }
+
+      .button-link {
+        margin-left: 1em;
+      }
+
+      .delete {
+        background-color: crimson;
+      }
+
+      yay {
+        color: green;
+      }
+
+      boo {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>edit objectives</h1>
+    <ul id="objectives"></ul>
+    <a id="new-objective-link" class="button-link">add objective</a>
+    <a href="" class="button-link" id="return-link">back</a>
+    <script>
+      // parse session id
+      let params = new URLSearchParams(location.search);
+      let sessionID = params.get("id");
+      loadObjectiveList(sessionID, () => {
+        // add edit and delete links
+        $("li").each((num, objective) => {
+          $(objective).append(
+            '<a class="delete button-link" href="/rocketry/archive/delete?table=launch_objectives' +
+              "&column=composite_id&value=(" +
+              sessionID +
+              "," +
+              $(objective).attr("id").replace("objective", "") +
+              ')">delete</a>'
+          );
+        });
+      });
+      $("#return-link").attr("href", "/rocketry/archive/view?id=" + sessionID);
+      $("#new-objective-link").attr(
+        "href",
+        "/rocketry/archive/edit/new-objective?id=" + sessionID
+      );
+    </script>
+  </body>
+</html>

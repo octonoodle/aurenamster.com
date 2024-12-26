@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>database</title>
+  </head>
+  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+  <script src="/scripts/database-client/table.js"></script>
+  <style>
+    tbody {
+      display: flex;
+      width: 100vw;
+    }
+
+    tr {
+      display: flex;
+      flex-direction: column;
+    }
+
+    th,
+    td {
+      border: 2px solid black;
+      padding: 2px;
+      text-align: center;
+    }
+
+    td {
+      height: 50px;
+    }
+  </style>
+  <body>
+    <h1>a table in rocketry database:</h1>
+    <table id="data-table"></table>
+    <script>
+      displayTable("launch_sessions");
+    </script>
+  </body>
+</html>
