@@ -40,8 +40,8 @@ module.exports = function (request, response) {
             let constructedQuery = `DELETE FROM ${table} WHERE ${column}=${value} RETURNING *;`;
             process.stdout.write("[api/delete] ");
             console.log(constructedQuery);
-            database.query(constructedQuery);
             redirect(table, column, value, response);
+            database.query(constructedQuery);
           }
         });
     });
