@@ -10,10 +10,10 @@ const localQuerier = new Pool({
 });
 
 const querier = new Pool({
-  user: "website",
+  user: "postgres",
   host: "localhost",
   database: "rocketry",
-  password: "3n%x95#2k)s",
+  password: "",
   port: 7775,
 });
 
