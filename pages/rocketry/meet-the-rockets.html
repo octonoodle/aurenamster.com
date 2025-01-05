@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>meet the rockets</title>
+    <script src="/scripts/client/load-defaults.js"></script>
+    <script src="/scripts/client/load-menu-bar.js"></script>
+    <link rel="stylesheet" href="/styles/bloggish.css" />
+    <style>
+      section {
+        display: flex;
+        flex-direction: row;
+      }
+
+      info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+      }
+
+      p {
+        max-width: 400px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>meet the rockets</h1>
+    <!-- <section>
+      <img src="/images/img-not-found.jpg" alt="" />
+      <info>
+        <h2>name</h2>
+        <deets>
+          <strong>built from: </strong>Dec 5, 1991<strong> to: </strong>Dec 28,
+          1992
+        </deets>
+        <p>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repellendus,
+          impedit? Aperiam accusamus perferendis beatae? Cum nostrum ad
+          temporibus non molestiae accusamus ut vitae eos distinctio, voluptas
+          mollitia, optio tenetur laboriosam tempore velit accusantium quod
+          fugit aut exercitationem. Obcaecati, quaerat delectus nostrum
+          incidunt, consectetur sed quisquam expedita minima qui, reprehenderit
+          ratione?
+        </p>
+      </info>
+    </section> -->
+  </body>
+  <script>
+    $.get("/api/read/all/rockets", (rockets) => {
+      rockets = rockets.filter((rock) => rock["flagship?"]);
+      rockets = rockets.sort((rock1, rock2) => {
+        let date2 = new Date(rock1.build_date_end ?? "2124-01-01");
+        let date1 = new Date(rock2.build_date_end ?? "2124-01-01");
+        return date1.valueOf() - date2.valueOf();
+      });
+
+      for (rock of rockets) {
+        let id = rock.rocket_name.split(/[\s,]/gm).join('-');
+        $("body").append(`<section id="${id}"></section>`);
+        // $("#" + id).append('<img src="/images/img-not-found.jpg" alt="" />');
+        $("#" + id).append("<info></info>");
+        $("#" + id + " info").append(`<h2>${rock.rocket_name}</h2>`);
+        $("#" + id + " info").append("<deets></deets>");
+        $("#" + id + " info").append("<p></p>");
+
+        $("#" + id + " info p").append(rock.description);
+        let start = niceDate(rock.build_date_start) ?? '???';
+        let end = niceDate(rock.build_date_end) ?? '???';
+        let deets = `<strong>built from:</strong> ${start} <strong>to:</strong> ${end}`;
+        $("#" + id + " info deets").append(`<strong>built from:</strong> ${start}`);
+        $("#" + id + " info deets").append(`<br><strong>finished:</strong> ${end}`);
+        $("#" + id + " info deets").append(`<br><strong>method:</strong> ${rock.build_method}`)
+      }
+    });
+  </script>
+</html>

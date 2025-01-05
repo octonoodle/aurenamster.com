@@ -41,3 +41,17 @@ function dbFormat(original) {
     "'";
   return formatted;
 }
+
+// formats ugly ISO date from database into nice MDY format (ex. Dec 5, 2012)
+function niceDate(dbDate) {
+  if (dbDate) {
+    date = new Date(dbDate);
+    return new Intl.DateTimeFormat("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "2-digit",
+    }).format(date);
+  } else {
+    return undefined;
+  }
+}
