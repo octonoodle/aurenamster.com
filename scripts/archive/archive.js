@@ -102,6 +102,10 @@ $.get("/api/read/all/launch_sessions", function (sessions) {
             ">delete</a></td>"
         );
       });
+
+      $("#subtitle-area").append(
+        '<a class="button-link" id="add-image-button" href="/rocketry/archive/edit/new-image">add images</a>'
+      );
     }
   });
 });
