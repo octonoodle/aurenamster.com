@@ -2,6 +2,7 @@ const get = require("./get");
 const catPics = require("./scripts/client/get-sad-cat");
 const amiloggedin = require("./scripts/client/am-i-logged-in");
 const api = require("./scripts/api/router");
+const fs = require('fs');
 
 const down = false;
 
@@ -17,6 +18,7 @@ function serverFunction(request, response) {
   if (i > -1) {
     // file directly requested
     let extension = request.url.substring(i);
+    extension = extension.toLowerCase();
 
     console.log("serving file type: " + extension);
 
@@ -57,6 +59,18 @@ function serverFunction(request, response) {
       return;
     } else if (request.url === "/amiloggedin") {
       amiloggedin(request, response);
+      return;
+    } else if (request.url === "/baking-portfolio-images") {
+      fs.readdir('images/baking-portfolio/', (error, data) => {
+        if (error) {
+          get.json(JSON.stringify(['no data available']), response);
+          process.stdout.write("[baking-portfolio-images] produced error: ");
+          console.log(error);
+        } else {
+          data = data.filter(name => !(name[0] === '.')); // remove hidden files
+          get.json(JSON.stringify(data), response);
+        }
+      });
       return;
     }
 
