@@ -1,0 +1,5 @@
+/* more QoL styles for standard site pages */
+
+h2 {
+    color: var(--complimentary);
+}

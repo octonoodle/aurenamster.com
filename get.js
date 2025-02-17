@@ -16,6 +16,14 @@ function serveFile(file, response, contentType) {
     });
 }
 
+// serve json
+function json(data, response) {
+    response.writeHead(200, { "Content-Type": "application/json" });
+    response.write(data);
+    response.end();
+    console.log('[get/json] served json data successfully (no validation!)');
+}
+
 function html(file, response) {
     serveFile(file, response, 'text/html');
 }
@@ -94,6 +102,7 @@ module.exports = {
     js,
     css,
     svg,
+    json,
     error415,
     error503,
     error404,

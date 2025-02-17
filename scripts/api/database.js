@@ -25,9 +25,7 @@ async function query(query, response) {
     let results = await querier.query(query);
     if (response) {
       console.log('[database/json] serving json to response');
-      response.writeHead(200, { "Content-Type": "application/json" });
-      response.write(JSON.stringify(results.rows));
-      response.end();
+      get.json(JSON.stringify(results.rows), response);
     } else {
       console.log('[database/json] returning raw json data');
       return JSON.stringify(results.rows);

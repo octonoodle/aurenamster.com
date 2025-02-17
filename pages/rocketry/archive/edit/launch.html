@@ -23,15 +23,17 @@
   </head>
   <body>
     <h1>edit launch</h1>
-    <form action="" method="post">
-      <label for="time">launch time: </label>
-      <input type="time" name="time" id="time" required /><br />
-      <label for="rocket">launched rocket: </label>
-      <select name="rocket" id="rocket" required>
+    <form action="" method="post" id="main">
+      <label for="time-input">launch time: </label>
+      <input type="time" id="time-input" required /><br />
+      <input type="hidden" name="time" id="time" />
+      <label for="rocket-input">launched rocket: </label>
+      <select id="rocket-input" required>
         <option value="rocket1">rocket1</option>
         <option value="rocket2">rocket2</option>
         <option value="rocket3">rocket3</option>
       </select>
+      <input type="hidden" name="rocket" id="rocket">
       <br />
       <label for="motor_id">rocket motor: </label>
       <select name="motor_id" id="motor" required>
@@ -45,9 +47,10 @@
       <div id="no-altitude">no</div>
       <br />
       <label for="altitude_m">altitude (m): </label>
-      <input type="number" name="altitude_m" id="altitude" value="0" required />
+      <input type="number" id="altitude-input" value="0" required />
+      <input type="hidden" name="altitude_m" id="altitude">
       <br />
-      <button type="submit" class="button-link" id="submit-button">
+      <button type="button" class="button-link" id="submit-button" onclick="formatSubmit()">
         submit
       </button>
       <input type="hidden" name="launch_id" />
@@ -67,7 +70,7 @@
               '<label for="altitude_m">altitude (m): </label>'
             );
             $("#submit-button").before(
-              '<input type="number" name="altitude_m" id="altitude" value=0 required/>'
+              '<input type="number" name="altitude_m" id="altitude-input" value=0 required/>'
             );
             $("#submit-button").before("<br />");
             $("#yes-altitude").html("<strong>yes</strong>");
@@ -77,7 +80,7 @@
         });
         $(document).on("click", "#no-altitude", () => {
           if (definedAltitude) {
-            $("#altitude").remove();
+            $("#altitude-input").remove();
             $('label[for="altitude_m"]').remove();
             $("#submit-button").prev().remove(); // <br>
             $("#no-altitude").html("<strong>no</strong>");
@@ -97,9 +100,9 @@
           if (launch) {
             // populate form with data
             $.get("/api/read/all/rockets", (rockets) => {
-              $("#rocket").empty();
+              $("#rocket-input").empty();
               for (rocket of rockets) {
-                $("#rocket").append(
+                $("#rocket-input").append(
                   '<option value="' +
                     rocket.rocket_name +
                     '">' +
@@ -122,13 +125,27 @@
             });
             // auto-select previous data
             setTimeout(function () {
-              $("#time").val(launch.time);
-              $("#rocket").val(launch.rocket);
-              $("#motor").val(launch.motor_name);
+              $("#time-input").val(launch.time);
+              $("#rocket-input").val(launch.rocket);
+              $("#motor").val(launch.motor_id);
             }, 10);
           }
         });
       });
+
+      // bundle data for proper submission
+      function formatSubmit() {
+        $("#rocket").val($("#rocket-input").val());
+        addEscapeChars("rocket");
+        $("#time").val($("#time-input").val());
+        addEscapeChars("time");
+        if (definedAltitude) {
+          $("#altitude").val($("#altitude-input").val());
+        } else {
+          $("#altitude").val('null');
+        }
+        document.getElementById("main").submit();
+      }
     </script>
   </body>
 </html>
