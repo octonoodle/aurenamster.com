@@ -4,3 +4,4 @@ video
 node_modules
 api.txt
 postgres.txt
+.env

@@ -1,5 +1,6 @@
 const Pool = require("pg").Pool;
 const get = require("../../get");
+require('dotenv').config();
 
 const localQuerier = new Pool({
   user: "postgres",
@@ -10,10 +11,10 @@ const localQuerier = new Pool({
 });
 
 const querier = new Pool({
-  user: "postgres",
+  user: "auren",
   host: "localhost",
   database: "rocketry",
-  password: "",
+  password: process.env.PASSWORD,
   port: 7775,
 });
 
@@ -21,7 +22,7 @@ const querier = new Pool({
 // optional response parameter for quick raw json response
 async function query(query, response) {
   try {
-    let results = await localQuerier.query(query);
+    let results = await querier.query(query);
     if (response) {
       console.log('[database/json] serving json to response');
       get.json(JSON.stringify(results.rows), response);

@@ -2,8 +2,8 @@ const https = require('https');
 const http = require('http');
 const fs = require('fs');
 const myserver = require('./httpserver');
-const portHTTP = 80;
-const portHTTPS = 443;
+const portHTTP = 48180;
+const portHTTPS = 48180;
 
 const useHTTPS = (process.argv[2] !== 'false');
 console.log(process.argv);

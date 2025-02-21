@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      dotenv:
+        specifier: ^16.4.7
+        version: 16.4.7
       pg:
         specifier: ^8.12.0
         version: 8.12.0
@@ -24,6 +27,10 @@ packages:
   completion@1.0.3:
     resolution: {integrity: sha512-uptx4YCEYMtsq20x8X0LzuEALa+BAAFbByOSMInlDfiP7dw/8YuQSE2zbdr9yc2MvtCN/yKhO/cd4bNx7N1stg==}
     engines: {node: '>= 0.8.0'}
+
+  dotenv@16.4.7:
+    resolution: {integrity: sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==}
+    engines: {node: '>=12'}
 
   line-info@0.2.0:
     resolution: {integrity: sha512-2EapVhnSTnRbRyvr27GmCJM9BouIM8YVzm2LhEZ9JT9emzeoSxDea+wJ72/uCGR5oOQSq5mveStDQecCp3mJjw==}
@@ -95,6 +102,8 @@ snapshots:
     dependencies:
       clone: 0.1.19
       line-info: 0.2.0
+
+  dotenv@16.4.7: {}
 
   line-info@0.2.0: {}
 
