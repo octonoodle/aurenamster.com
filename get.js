@@ -44,6 +44,9 @@ function svg(file, response) {
     serveFile(file, response, 'image/svg+xml');
 }
 
+function mp4(file, response) {
+    serveFile(file, response, 'video/mp4');
+}
 
 // errors
 
@@ -102,6 +105,7 @@ module.exports = {
     js,
     css,
     svg,
+    mp4,
     json,
     error415,
     error503,

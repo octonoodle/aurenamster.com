@@ -35,6 +35,8 @@ function serverFunction(request, response) {
       get.css(request.url, response);
     } else if (extension === ".svg") {
       get.svg(request.url, response);
+    } else if (extension === ".mp4") {
+      get.mp4(request.url, response);
     } else {
       get.error415(extension, response);
       console.log("[main/file] threw 415 (Unsupported Media Type) on file type " + extension);

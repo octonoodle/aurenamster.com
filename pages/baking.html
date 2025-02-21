@@ -54,15 +54,27 @@
     <script>
       $.get("/baking-portfolio-images", (filenames) => {
         for (filename of filenames) {
-          let id = filename.split('.')[0];
-          let alt = id.split("-").map(word => word[0].toUpperCase() + word.substring(1)).join(" ");
+          let id = filename.split(".")[0];
+          let alt = id
+            .split("-")
+            .map((word) => word[0].toUpperCase() + word.substring(1))
+            .join(" ");
           $("#images").append(
             `<div id="${id}"><img src="/images/baking-portfolio/${filename}" alt="${alt}" />
                 <p>${alt}</p></div>`
           );
-          $(document).on('onmouseover', id, () => {
+          $(document).on("onmouseover", id, () => {
             alert(alt);
           });
+        }
+
+        // if strawberry cheesecake one exists, move it to top (nice looking on page open)
+        if (document.getElementById("strawberry-cheesecake")) {
+          $("#strawberry-cheesecake").prependTo("#images");
+        } else if (document.getElementById("chocolate-peanut-butter-cake")) {
+          $("#chocolate-peanut-butter-cake").prependTo("#images");
+        } else if (document.getElementById("almond-hazelnut-macarons")) {
+          $("#almond-hazelnut-macarons").prependTo("#images");
         }
       });
     </script>
