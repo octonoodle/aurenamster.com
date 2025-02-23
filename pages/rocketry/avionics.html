@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>avionics</title>
+    <script src="/scripts/client/load-defaults.js"></script>
+    <script src="/scripts/client/load-menu-bar.js"></script>
+    <link rel="stylesheet" href="/styles/bloggish.css" />
+    <style>
+      h1 {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 0);
+        margin-top: 3vw;
+      }
+
+      img.background {
+        width: 100vw;
+      }
+
+      .imgbox {
+        width: 20vw;
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        background-color: var(--white);
+        border: var(--border-width) solid var(--accent);
+      }
+
+      .imgbox img {
+        width: 96%;
+        margin: 2%;
+      }
+
+      .caption {
+        width: 94%;
+        margin: 3%;
+      }
+
+      #wires {
+        top: 20vw;
+        left: 5vw;
+      }
+
+      #beep {
+        top: 75vw;
+        left: 75vw;
+      }
+
+      #antenna {
+        top: 100vw;
+        left: 5vw;
+      }
+
+      #exploded {
+        top: 20vw;
+        left: 75vw;
+      }
+
+      #full-sled {
+        top: 40vw;
+        left: 5vw;
+      }
+
+      #interface {
+        top: 75vw;
+        left: 5vw;
+      }
+
+      #centercolumn {
+        position: absolute;
+        top: max(25vw, 200px);
+        left: 50%;
+        transform: translate(-50%, 0);
+        width: 40vw;
+        max-width: 400px;
+        background-color: var(--white);
+        font-size: min(1em, 2vw);
+        padding: 1vw;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>avionics</h1>
+    <!-- <video width="480" controls>
+        <source src="/video/eepy.mp4" type="video/mp4">
+        Your browser does not support the html5 video tag.
+    </video> -->
+    <img class="background" src="/images/avionics/scenery.jpeg" alt="" />
+    <div class="imgbox" id="wires">
+      <img src="/images/avionics/signal-testing.jpeg" alt="" />
+      <p class="caption">some signal testing</p>
+    </div>
+    <div class="imgbox" id="beep">
+      <img src="/images/avionics/beep-controller.jpeg" alt="" />
+      <p class="caption">buzzer controller for recovery by beeping</p>
+    </div>
+    <div class="imgbox" id="exploded">
+      <img src="/images/avionics/wilhelm-cargo-bay.jpeg" alt="" />
+      <p class="caption">exploded view of Wilhelm's cargo bay</p>
+    </div>
+    <div class="imgbox" id="antenna">
+      <img src="/images/avionics/ground-station-funny-antenna.jpeg" alt="" />
+      <p class="caption">ground receiver station with a rather exotic antenna</p>
+    </div>
+    <div class="imgbox" id="full-sled">
+      <img src="/images/avionics/full-sled.jpeg" alt="" />
+      <p class="caption">assembled avionics bay (GPS, accelerometer, altimeter)</p>
+    </div>
+    <div class="imgbox" id="interface">
+        <img src="/images/avionics/interface.jpeg" alt="" />
+        <p class="caption">the radio telemetry interface</p>
+      </div>
+    <p id="centercolumn">
+      many of the rockets i fly carry electronics on board. these are known as "avionics": 
+      they measure data like altitude, speed, and GPS location, and sometimes, they control
+      the rocket in some way. this can include active control, like robotic aerobraking,
+      as well as the electronic triggering of ejection charges and upper stages in more advanced
+      rockets.
+      <br><br>
+      for hardware, i am a big fan of Adafruit's Feather line of microcontrollers and sensors. i
+      mostly use Arduino IDE for programming them, but i have experimented with Zephyr RTOS at
+      times for higher performance. i use git for versioning and follow best practices to keep
+      my code readable as projects get more complex.
+    </p>
+  </body>
+</html>
