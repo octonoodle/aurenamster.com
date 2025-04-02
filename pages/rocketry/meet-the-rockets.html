@@ -58,7 +58,7 @@
       });
 
       for (rock of rockets) {
-        let id = rock.rocket_name.split(/[\s,]/gm).join('-');
+        let id = rock.rocket_name.split(/[^\w:\u00C0-\u00FF]/gm).join('-');
         $("body").append(`<section id="${id}"></section>`);
         // $("#" + id).append('<img src="/images/img-not-found.jpg" alt="" />');
         $("#" + id).append("<info></info>");
@@ -72,7 +72,8 @@
         let deets = `<strong>built from:</strong> ${start} <strong>to:</strong> ${end}`;
         $("#" + id + " info deets").append(`<strong>built from:</strong> ${start}`);
         $("#" + id + " info deets").append(`<br><strong>finished:</strong> ${end}`);
-        $("#" + id + " info deets").append(`<br><strong>method:</strong> ${rock.build_method}`)
+          $("#" + id + " info deets").append(`<br><strong>method:</strong> ${rock.build_method}`);
+	  $("#" + id + " info deets").append(`<br><strong>mount size:</strong> ${rock.mount_diameter_mm} mm`);
       }
     });
   </script>
