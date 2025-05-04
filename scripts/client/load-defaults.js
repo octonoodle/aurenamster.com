@@ -16,10 +16,31 @@ head.innerHTML =
   head.innerHTML + `<link rel="stylesheet" href="/styles/default.css">\n`;
 
 if (typeof jQuery === "undefined") {
-  var script = document.createElement("script");
-  script.src = "https://code.jquery.com/jquery-latest.min.js";
+  
+  // synchronous jquery load
+  let script = document.createElement("script");
+  const request = new XMLHttpRequest();
+  request.open("GET", "https://code.jquery.com/jquery-3.7.1.min.js", false);
+  request.send(null);
+  script.innerHTML = request.responseText;
   script.type = "text/javascript";
   document.getElementsByTagName("head")[0].appendChild(script);
+
+  // let migrate = document.createElement("script");
+  // const request2 = new XMLHttpRequest();
+  // request2.open("GET", "https://code.jquery.com/jquery-migrate-3.5.2.js", false);
+  // request2.send(null);
+  // migrate.innerHTML = request2.responseText;
+  // migrate.type = "text/javascript";
+  // document.getElementsByTagName("head")[0].appendChild(migrate);
+}
+
+function defer(method) {
+  if (window.jQuery) {
+      method();
+  } else {
+      setTimeout(function() { defer(method) }, 50);
+  }
 }
 
 // wrapper for dbFormat() to target object by id

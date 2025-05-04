@@ -54,8 +54,9 @@
     <script>
       $.get("/baking-portfolio-images", (filenames) => {
         for (filename of filenames) {
-          let id = filename.split(".")[0];
-          let alt = id
+          let base = filename.split(".")[0];
+          let id = base.split("'").join('-').split('"').join('-');
+          let alt = base
             .split("-")
             .map((word) => word[0].toUpperCase() + word.substring(1))
             .join(" ");
