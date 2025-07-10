@@ -75,12 +75,39 @@ $.get("/api/read/all/launch_sessions", function (sessions) {
           }
           if (objectives.length == 0) {
             $("#" + rowID).attr("class", "inconclusive");
-          } else if (objectives.every((objective) => objective.success)) {
-            $("#" + rowID).attr("class", "success");
-          } else if (objectives.some((objective) => objective.success)) {
-            $("#" + rowID).attr("class", "partial-success");
+            // } else if (objectives.every((objective) => objective.success)) {
+            //   $("#" + rowID).attr("class", "success");
+            // } else if (objectives.some((objective) => objective.success)) {
+            //   $("#" + rowID).attr("class", "partial-success");
           } else {
-            $("#" + rowID).attr("class", "failure");
+            // $("#" + rowID).attr("class", "failure");
+            let success = objectives.reduce((total, item) => {
+              return total + item.success; // add if it was a failed objective
+            }, 0);
+            // let pow = Math.pow;
+            // let sech = function (x) {
+            //   return 2.0 / (pow(Math.E, x) + pow(Math.E, -x));
+            // };
+            // let multiplier = 0.25;
+            // let trim = 0.4;
+            // let offset = 0.6;
+            // let flatten = 1.3;
+            // let colorFunc = (x) => {
+            //   return (
+            //     sech(pow(Math.abs(x - offset) / trim, flatten)) *
+            //     pow(x, multiplier)
+            //   );
+            // };
+
+            let ratio = 1 - success / objectives.length;
+            // let red = 255 * colorFunc(ratio);
+            // let green = 255 * colorFunc(1 - ratio);
+            let channels = colorFunc(ratio);
+
+            $("#" + rowID + " .date").attr(
+              "style",
+              `color:rgb(${channels[0]},${channels[1]},${channels[2]});`
+            );
           }
         }
       );

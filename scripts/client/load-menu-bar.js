@@ -14,8 +14,8 @@ function colorTheMenu() {
     if (siteSection === '') {
         siteSection = 'home'
     }
-    menu = document.getElementById('menu-bar');
-    text = menu.querySelector(`#${siteSection} h3`);
+    let menu = document.getElementById('menu-bar');
+    let text = menu.querySelector(`#${siteSection} h3`);
     if (text == null) return;
     text.style.color = 
     getComputedStyle(document.body)
