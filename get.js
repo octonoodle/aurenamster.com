@@ -98,6 +98,12 @@ function redirect(target, response) {
     response.writeHead(301, {'Content-Type': 'text/plain', location: target});
     response.end();
 }
+
+function err404print(message, request, response) {
+    console.log(message);
+    error404(request.url, response);
+}
+
 module.exports = {
     serveFile,
     html,
@@ -111,5 +117,6 @@ module.exports = {
     error503,
     error404,
     error405,
-    redirect
+    redirect,
+    err404print
 };
