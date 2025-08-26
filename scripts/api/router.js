@@ -6,6 +6,7 @@ const deleter = require("./delete");
 const parse = require("./parse");
 const fs = require("fs");
 const parseCookie = require("../cookies");
+const images = require("./images");
 
 /*
 resource indication format
@@ -48,6 +49,23 @@ e.g. abcdefg in /api/abcdefg/hijklmn/1234567,
 are limited to 20 characters. all api requests with any field longer than 20 chars will be rejected with 40
 */
 
+/*
+new new format (update):
+a new action appears: /api/image
+this special action is for handling image uploads from the frontnend.
+
+rough format:
+/api/image/action/location/id...
+api/image: required prefix
+action: create or delete
+location: part of the website where this media is going (hard-coded)
+id...: idenifiers for specific subpages (such as [session_id])
+
+hardcoded location list:
+archive (launch archive) "/api/image/aciton/archive/[session_id]"
+baking (baking portfolio) "/api/image/action/baking"
+*/
+
 module.exports = route;
 
 function route(request, response) {
@@ -80,6 +98,11 @@ function route(request, response) {
     console.log("switching to path [delete]");
     verifyContinue(request, response, () => {
       deleter(request, response);
+    })
+  } else if (urlBits[1] === "image") {
+    console.log("switching to path [image]");
+    verifyContinue(request, response, () => {
+      images(request, response, urlBits.slice(2)); // remove /api/image
     })
   } else {
     console.log(`non-recognized operation ${urlBits[1]}`);

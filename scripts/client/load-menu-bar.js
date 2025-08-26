@@ -5,7 +5,7 @@ window.onload = function() {
     `<nav id="menu-bar"></nav>\n` + 
     document.body.innerHTML;
 
-    $("#menu-bar").load("/pages/util/menubar.html style,.menu-bar > ", colorTheMenu);
+    $("#menu-bar").load("/util/menubar.html style,.menu-bar > ", colorTheMenu);
 }
 
 function colorTheMenu() {

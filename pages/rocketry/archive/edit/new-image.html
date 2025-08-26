@@ -1,14 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <script src="/scripts/client/load-defaults.js"></script>
-    <script src="/scripts/client/load-menu-bar.js"></script>
-</head>
-<body>
-    <h1>add image</h1>
-    <form action=""></form>
-</body>
+    <script src="/client/load-defaults.js"></script>
+    <script src="/client/load-menu-bar.js"></script>
+    <script src="/new-image.js" defer></script>
+    <style>
+      #form-container {
+        border: 2px solid black;
+        width: 70vw;
+        height: auto;
+        margin: auto;
+        display: block;
+        margin-top: 4em;
+        padding: 2em;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>add image(s)</h1>
+    <div id="form-container">
+      <form
+        id="theform"
+        name="theform"
+        action="/api/image/create"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <label for="image">upload your image (webp, png, jpg): </label>
+        <input type="file" name="image" id="image" onchange="onUpload(this)" />
+        <br />
+        <label for="compress">do you want to compress this image? </label>
+        <input
+          type="checkbox"
+          name="compress"
+          id="compress"
+          value="true"
+          checked
+        />
+        <br /><br /><br />
+        <label for="location">location</label>
+        <select name="location" id="location" onchange="updateLocation(this.value)">
+          <option value="1">location 1</option>
+          <option value="2">location 2</option>
+        </select>
+        <br />
+        <label for="session">target session: </label>
+        <select name="session_id" id="session">
+          <option value="1">session 1</option>
+          <option value="2">session 2</option>
+          <option value="3">session 3</option>
+        </select>
+        <input
+          type="hidden"
+          name="compress"
+          id="compressHidden"
+          value="false"
+        />
+        <br /><br /><br />
+        <input type="hidden" name="file_type" id="file_type" />
+        <button type="button" class="button-link" onclick="theFormSubmit()">submit</button>
+      </form>
+    </div>
+  </body>
 </html>

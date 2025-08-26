@@ -1,6 +1,7 @@
 const fs = require('fs');
 
-let imgLocation = './images/site-down-cats/';
+let imgLocationLocal = './assets/images';
+let folderLocation = '/site-down-cats/';
 let imgExtensions = ['.png','.jpg','.jpeg'];
 
 function isImageFile(file) {
@@ -26,19 +27,19 @@ function getRandomInt(min, max) {
 function getCat() {
     let result;
     try {
-        results = fs.readdirSync(imgLocation);
+        results = fs.readdirSync(imgLocationLocal + folderLocation);
         
         files = results.filter(isImageFile);
         let randomIndex = getRandomInt(0, files.length - 1)
         let selectedCat = files[randomIndex];
         //console.log(imgLocation+selectedCat);
-        result = imgLocation+selectedCat;
+        result = folderLocation+selectedCat;
     } 
     catch {
-        result = '/images/img-not-found.jpg';
-        console.log('getCat: no image folder found at '+imgLocation); 
+        result = '/img-not-found.jpg';
+        console.log('[get cat] error: no image folder found at '+imgLocation); 
     }
-    return result.substring(1);
+    return result;
 }
 
 //console.log('result of thing: '+getCat());

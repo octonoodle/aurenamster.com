@@ -1,6 +1,5 @@
 .DS_Store
-images
-video
+assets
 node_modules
 api.txt
 postgres.txt
