@@ -12,7 +12,7 @@ function serverFunction(request, response) {
   // response.write('hello i am serber');
   // response.end();
 
-  console.log(`[${timeAndDate()}] <${request.connection.remoteAddress}> url: ${request.url}`);
+    console.log(`[${timeAndDate()}] <${request.headers['x-forwarded-for']}> url: ${request.url}`);
 
   // special routes
   if (request.url === "/404cat") {
