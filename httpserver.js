@@ -73,6 +73,8 @@ function serverFunction(request, response) {
       get.mp4(request.url, response);
     } else if (extension === ".pdf") {
       get.pdf(request.url, response);
+    } else if (extension === ".zip") {
+      get.zip(request.url, response);
     } else {
       get.error415(extension, response);
       console.log("[main/file] threw 415 (Unsupported Media Type) on file type " + extension);

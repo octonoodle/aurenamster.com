@@ -57,6 +57,10 @@ function pdf(file, response) {
   serveFile("/assets" + file, response, "application/pdf");
 }
 
+function zip(file, response) {
+    serveFile("/assets" + file, response, "application/zip");
+}
+
 // errors
 
 function error403(request, response) {
@@ -127,6 +131,7 @@ module.exports = {
   svg,
   mp4,
   pdf,
+  zip,
   json,
   error415,
   error503,

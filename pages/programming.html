@@ -11,6 +11,10 @@
       p {
         text-wrap: balance;
       }
+
+      section {
+        flex-direction: column;
+      }
     </style>
   </head>
   <body>
@@ -23,7 +27,17 @@
     <h2>arduino</h2>
     <section>
     <p>i have also spent a lot of time programming embedded systems <a href="/rocketry/avionics">for my rockets.</a>
-    i work with Arduino IDE and occasionally with command-line bootloaders like <code>bossac</code>.</p>
+    i work with Arduino IDE and occasionally with command-line bootloaders like <code>bossac</code>. early on,
+    my code mostly stuck to the <code>setup()</code> and <code>loop()</code> program flow, but over the years 
+    i have matured into using much more efficient interrupt-driven programming styles for my arduino projects,
+    with the most notable of these being the code behind my chute release/altimeter system.</p>
+    </section>
+    <h2>c for the sake of c</h2>
+    <section>
+      <p>though i most often work in c in the context of arduino programming, i have done a couple of projects
+        in pure c to achieve various tasks. my biggest to date is an <a href="https://github.com/octonoodle/qov">image compression algorithm</a> 
+        for the QOI image format. i am interested in eventually creating a video version of QOI. WIP.
+      </p>
     </section>
     <h2>java and processing</h2>
     <section>
@@ -31,10 +45,19 @@
       i have used processing to visualize the data from an accelerometer, and i plan to make an info dashboard to view rocket telemetry in the future.
       the <a href="/rocketry/archive">interactive scale</a> on the archive page is made with p5.js, the Javascript version of Processing!
     </p>
+    <div class="button-links">
+      <a href="/code/java/music_box.zip" class="button-link">music box</a>
+      <a href="/code/java/quad_map.zip" class="button-link">quad map (graphics toy)</a>
+    </div>
     </section>
     <h2>racket</h2>
     <p>a really nice functional language i learned in school. here are some of my finer projects.</p>
-    
+    <div class="button-links">
+      <a href="/code/racket/another-program-v2.rkt.zip" class="button-link">"operating system"</a>
+      <a href="/code/racket/fun-quiz.rkt.zip" class="button-link">quiz game</a>
+      <a href="/code/racket/Choose-Your-Own-Adventure.rkt.zip" class="button-link">choose your own adventure</a>
+    </div>
     <br />
+
   </body>
 </html>
