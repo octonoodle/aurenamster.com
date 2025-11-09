@@ -2,7 +2,7 @@ const fs = require('fs');
 
 let imgLocationLocal = './assets/images';
 let folderLocation = '/site-down-cats/';
-let imgExtensions = ['.png','.jpg','.jpeg'];
+let imgExtensions = ['.png','.jpg','.jpeg','.webp'];
 
 function isImageFile(file) {
     let dot = file.lastIndexOf('.');

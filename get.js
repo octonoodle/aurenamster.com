@@ -41,7 +41,7 @@ function img(file, extension, response) {
   serveFile(
     "/assets/images" + file,
     response,
-    "img/" + extension.substring(1)
+    "img/" + extension.substring(1) //dymanically generate mimetype
   );
 }
 

@@ -6,7 +6,7 @@ const fs = require('fs');
 
 const down = false;
 
-const imgExtensions = [".png", ".jpg", ".jpeg", ".gif"];
+const imgExtensions = [".png", ".jpg", ".jpeg", ".gif", ".webp"];
 
 function serverFunction(request, response) {
   // response.write('hello i am serber');
