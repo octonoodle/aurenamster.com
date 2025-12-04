@@ -63,8 +63,9 @@ function zip(file, response) {
 
 // errors
 
-function error403(request, response) {
-  html("/util/403", response);
+function error403(path, response) {
+    console.log("[get/403] 403 error on path " + path);
+    html("/util/403.html", response);
 }
 
 function error404(path, response) {

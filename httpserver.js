@@ -45,7 +45,8 @@ function serverFunction(request, response) {
     });
     return;
   } else if (request.url.includes("..")) {
-    get.error403(request, response); // prevent silly business
+      get.error403(request, response); // prevent silly business
+      return;
   }
 
   let i = request.url.lastIndexOf(".");
