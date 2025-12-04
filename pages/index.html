@@ -70,6 +70,51 @@
     <div class="caption">
       <em >my rockets have a major impact. especially on the ground.</em>
     </div>
+
+    <div id="ring-container">
+      <div class="spacer"></div>
+      <div id="ring"><a href="//tzhou.net">← PREV</a>The Ringularity<a href="http://gingery.space">NEXT →</a></div>
+    </div>
+    <style>
+      #ring-container {
+	  display: flex;
+	  flex-direction: column;
+	  justify-content: space-between;
+	  height: 500px;
+	  max-height: 50vh;
+      }
+
+      #ring-container .spacer {
+	  min-height: 200px;
+	  flex-grow: 1;
+      }
+      
+      
+#ring {
+    box-shadow: 0 0 2em #00000066;
+    background-color: #504945;
+    color: #83a598;
+    transition: scale 0.2s linear;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: nowrap;
+    padding: 1em;
+}
+
+#ring:hover a {
+    transition: transform 1.3s ease-in-out;
+    transform: scaleX(4) scaleY(1.5);
+    animation: bob 0.2s linear infinite;
+    animation-delay: 1.3s;
+}
+
+@keyframes bob {
+    from { transform: rotate(0deg) scaleX(4) scaleY(1.5); }
+    to { transform: rotate(360deg) scaleX(4) scaleY(1.5); }
+}
+
+</style>
   </body>
   
 </html>
