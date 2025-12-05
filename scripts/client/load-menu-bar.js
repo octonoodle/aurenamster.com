@@ -1,7 +1,7 @@
 // load menu bar
 window.onload = function() {
     // wrap content
-    document.body.innerHTML = `<div id="top-level-content">${document.body.innerHTML}</div>`
+    //document.body.innerHTML = `<div id="top-level-content">${document.body.innerHTML}</div>`
 
     // insert menu bar
     document.body.innerHTML = 
@@ -10,7 +10,7 @@ window.onload = function() {
 
     $("#menu-bar").load("/util/menubar.html style,.menu-bar > ", () => {
         // insert page footer
-        document.body.innerHTML += `<footer id="the-footer"></footer>`;
+        //document.body.innerHTML += `<footer id="the-footer"></footer>`;
 
         // $("#the-footer").load("/util/footer style,.the-footer > ");
         colorTheMenu();
