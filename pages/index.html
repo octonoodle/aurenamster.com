@@ -52,12 +52,21 @@
         display: block;
         width: 65vw;
       }
-/* 
-      #top-level-content {
+
+      /* stuff for ringularity looking correct :( */
+      body {
         display: flex;
         flex-direction: column;
         align-items: center;
-      } */
+        height: 100vh;
+        width: 100vw;
+        justify-content: space-between;
+      }
+
+      #menu-bar,
+      #ring {
+        width: 100vw;
+      }
     </style>
   </head>
 
@@ -77,15 +86,16 @@
     <div id="hole-image-caption">
       <em>my rockets have a major impact. especially on the ground.</em>
     </div>
-    <div id="ring-container">
-      <div id="ring-spacer"></div>
-      <div id="ring">
-        <a href="//tzhou.net">← PREV</a>The Ringularity<a
-          href="http://gingery.space"
-          >NEXT →</a
-        >
-      </div>
-    </div>
+    <!-- </div> hanging div to work with menu-bar-loaded script below -->
+    <!-- <div id="ring-container">
+      <div id="ring-spacer"></div> -->
+    <!-- </div> -->
+    <!-- <div id="ring">
+      <a href="//tzhou.net">← PREV</a>The Ringularity<a
+        href="http://gingery.space"
+        >NEXT →</a
+      >
+    </div> -->
     <style>
       #ring-container {
         display: flex;
@@ -128,16 +138,26 @@
         }
       }
     </style>
-    <script>
+    <!-- <script>
       // resize ring container to place ring at bottom
       document.addEventListener("menu-bar-loaded", (e) => {
-        let caption_y =
+        // $(document).on("load", () => {
+          let caption_y =
           Math.max($("#hole-image-caption").position().top +
           $("#hole-image-caption").height(), 40);
         let target_height =
           $(window).height() - (caption_y + $("#ring").outerHeight());
         // console.log(target_height);
         $("#ring-spacer").height(target_height);
+        // });
+      });
+    </script> -->
+
+    <script>
+      // enclose menu bar and most of page content in #home-container div
+      document.addEventListener("menu-bar-loaded", (e) => {
+        document.body.innerHTML = `<div id="home-container">${document.body.innerHTML}</div>`;
+        $("#home-container").after(`<div id="ring"><a href="//tzhou.net">← PREV</a>The Ringularity<a href="http://gingery.space">NEXT →</a></div>`);
       });
     </script>
   </body>
