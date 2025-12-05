@@ -7,7 +7,6 @@
     <script src="/client/load-defaults.js"></script>
     <script src="/client/load-menu-bar.js"></script>
     <style>
-
       h1 {
         font-size: 10vw;
       }
@@ -25,21 +24,21 @@
       }
 
       #count-container {
-	  width: 100vw;
-	  display: flex;
-	  justify-content: center;
-	  align-self: flex-end;
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+        align-self: flex-end;
       }
-      
+
       #counter {
-	  width: min-content;
-	  display:flex;
-	  border: 4px solid black;
-	  padding:0;
+        width: min-content;
+        display: flex;
+        border: 4px solid black;
+        padding: 0;
       }
 
       img {
-        width: 45vw; 
+        width: 45vw;
         border: var(--border-width) solid var(--accent);
       }
 
@@ -49,72 +48,91 @@
       }
 
       .caption em {
-        text-align: center; 
-        display: block; 
+        text-align: center;
+        display: block;
         width: 65vw;
       }
     </style>
   </head>
 
   <body>
-    
     <div id="page-title">
       <h1>auren website</h1>
-      <h6>"that's alright with me man" <strong>&nbsp;·&nbsp;</strong> © 2024 - 2025</h6>
+      <h6>
+        "that's alright with me man" <strong>&nbsp;·&nbsp;</strong> © 2024 -
+        2025
+      </h6>
     </div>
 
     <!-- <p>welcome to auren site, have nice time ok</p> -->
-    <br><br><br>
-    <img src="/oops.webp" alt="like the Airplane! poster.">
-    <br>
-    <div class="caption">
-      <em >my rockets have a major impact. especially on the ground.</em>
+    <br /><br /><br />
+    <img src="/oops.webp" alt="like the Airplane! poster." />
+    <br />
+    <div id="hole-image-caption">
+      <em>my rockets have a major impact. especially on the ground.</em>
     </div>
-
     <div id="ring-container">
-      <div class="spacer"></div>
-      <div id="ring"><a href="//tzhou.net">← PREV</a>The Ringularity<a href="http://gingery.space">NEXT →</a></div>
+      <div id="ring-spacer"></div>
+      <div id="ring">
+        <a href="//tzhou.net">← PREV</a>The Ringularity<a
+          href="http://gingery.space"
+          >NEXT →</a
+        >
+      </div>
     </div>
     <style>
       #ring-container {
-	  display: flex;
-	  flex-direction: column;
-	  justify-content: space-between;
-	  height: 500px;
-	  max-height: 50vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        /* height: 500px; */
+        /* max-height: 50vh; */
       }
 
       #ring-container .spacer {
-	  min-height: 200px;
-	  flex-grow: 1;
+        min-height: 200px;
+        flex-grow: 1;
       }
-      
-      
-#ring {
-    box-shadow: 0 0 2em #00000066;
-    background-color: #504945;
-    color: #83a598;
-    transition: scale 0.2s linear;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    flex-wrap: nowrap;
-    padding: 1em;
-}
 
-#ring:hover a {
-    transition: transform 1.3s ease-in-out;
-    transform: scaleX(4) scaleY(1.5);
-    animation: bob 0.2s linear infinite;
-    animation-delay: 1.3s;
-}
+      #ring {
+        box-shadow: 0 0 2em #00000066;
+        background-color: #504945;
+        color: #83a598;
+        transition: scale 0.2s linear;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        flex-wrap: nowrap;
+        padding: 1em;
+      }
 
-@keyframes bob {
-    from { transform: rotate(0deg) scaleX(4) scaleY(1.5); }
-    to { transform: rotate(360deg) scaleX(4) scaleY(1.5); }
-}
+      #ring:hover a {
+        transition: transform 1.3s ease-in-out;
+        transform: scaleX(4) scaleY(1.5);
+        animation: bob 0.2s linear infinite;
+        animation-delay: 1.3s;
+      }
 
-</style>
+      @keyframes bob {
+        from {
+          transform: rotate(0deg) scaleX(4) scaleY(1.5);
+        }
+        to {
+          transform: rotate(360deg) scaleX(4) scaleY(1.5);
+        }
+      }
+    </style>
+    <script>
+      // resize ring container to place ring at bottom
+      document.addEventListener("menu-bar-loaded", (e) => {
+        let caption_y =
+          Math.max($("#hole-image-caption").position().top +
+          $("#hole-image-caption").height(), 40);
+        let target_height =
+          $(window).height() - (caption_y + $("#ring").outerHeight());
+        // console.log(target_height);
+        $("#ring-spacer").height(target_height);
+      });
+    </script>
   </body>
-  
 </html>
