@@ -91,13 +91,40 @@
           `<strong>built from:</strong> ${start}`
         );
         $("#" + id + " info deets").append(
-          `<br><strong>finished:</strong> ${end}`
+          `&nbsp;&nbsp;&nbsp;<strong>finished:</strong> ${end}`
         );
         $("#" + id + " info deets").append(
           `<br><strong>method:</strong> ${rock.build_method}`
         );
         $("#" + id + " info deets").append(
-          `<br><strong>mount size:</strong> ${rock.mount_diameter_mm} mm`
+          `&nbsp;&nbsp;&nbsp;<strong>mount size:</strong> ${rock.mount_diameter_mm} mm`
+        );
+        $("#" + id + " info deets").append(
+          `<br><strong>status:</strong> ${
+            rock.service_status ? rock.service_status : "unknown"
+          }`
+        );
+
+        // calculate record altitude
+        $.get(
+          `/api/read/match/launches/rocket/'${rock.rocket_name.replace(
+            "/",
+            "%2f"
+          )}'`,
+          (launches) => {
+            launches = launches.filter((launch) => launch.altitude_m); // delete null launches
+            launches = launches.map((launch) => launch.altitude_m);
+            let max = "n/a";
+            if (launches.length > 0) {
+              max = Math.max(...launches);
+              console.log(launches);
+              console.log(max);
+              max += ' m';
+            }
+            $("#" + id + " info deets").append(
+              `&nbsp;&nbsp;&nbsp;<strong>altitude record:</strong> ${max}`
+            );
+          }
         );
       }
     });
