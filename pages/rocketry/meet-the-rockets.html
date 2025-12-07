@@ -46,7 +46,7 @@
     <!-- <section>
       <img src="/images/img-not-found.jpg" alt="" />
       <info>
-        <h2>name</h2>
+        <h2><a src="/rocketry/archive/view?id=69">name</a></h2>
         <deets>
           <strong>built from: </strong>Dec 5, 1991<strong> to: </strong>Dec 28,
           1992
@@ -112,18 +112,62 @@
             "%2f"
           )}'`,
           (launches) => {
-            launches = launches.filter((launch) => launch.altitude_m); // delete null launches
-            launches = launches.map((launch) => launch.altitude_m);
+            launches_defined = launches.filter((launch) => launch.altitude_m); // delete null launches
+            launch_alts = launches_defined.map((launch) => launch.altitude_m);
             let max = "n/a";
-            if (launches.length > 0) {
-              max = Math.max(...launches);
-              console.log(launches);
-              console.log(max);
-              max += ' m';
+            if (launches_defined.length > 0) {
+              max = Math.max(...launch_alts);
+              // console.log(launches);
+              // console.log(max);
+              max += " m";
             }
             $("#" + id + " info deets").append(
               `&nbsp;&nbsp;&nbsp;<strong>altitude record:</strong> ${max}`
             );
+
+            // link to recent launch session
+            if (launches.length > 0) {
+              let session_ids = launches.map((launch) => launch.session_id);
+              // remove duplicates
+              session_ids = [...new Set(session_ids)];
+
+              let sessions = new Array();
+              let onSuccess = function () {
+                // console.log(sessions);
+                sessions = sessions.sort((sesh1, sesh2) => {
+                  new Date(sesh1.date).getTime() >
+                    new Date(sesh1.date).getTime();
+                });
+                // console.log(sessions);
+                let newest_sesh = sessions[0];
+                $("#" + id + " info deets").append(
+                  `<br><strong>most recent launch:</strong> ${
+                    newest_sesh
+                      ? `<a href="/rocketry/archive/view?id=${
+                          newest_sesh.session_id
+                        }">${niceDate(newest_sesh.date)}</a>`
+                      : "n/a"
+                  }`
+                );
+                //$("#" + id + " info h2 a").attr("href", "/foo"); //'/rocketry/archive/view?id=' + sessions[0].session_id);
+              };
+              let reducer = (func_so_far, launch_session_id) =>
+                $.get(
+                  "/api/read/match/launch_sessions/session_id/" +
+                    launch_session_id,
+                  (results) => {
+                    sessions.push(results[0]); // an id should only turn up one session object
+                    // console.log("hi there");
+                    // console.log(results[0]);
+                    typeof func_so_far === "function"
+                      ? func_so_far.call()
+                      : func_so_far;
+                  }
+                );
+              // overall: list-of id -> function
+              // reducer: func, id -> func
+              session_ids.reduce(reducer, onSuccess);
+            }
           }
         );
       }
