@@ -42,6 +42,8 @@ a {
 h1 {
     font-size: 8vw;
     margin: 0;
+    text-decoration: underline; /* yummy underline */
+    text-decoration-color: var(--complimentary);
 }
 
 h2 {
