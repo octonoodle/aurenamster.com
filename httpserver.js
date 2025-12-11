@@ -31,6 +31,9 @@ function serverFunction(request, response) {
   } else if (request.url === "/amiloggedin") {
     amiloggedin(request, response);
     return;
+  } else if (request.url === "/meet-the-rockets") {
+    get.redirect("/rocketry/meet-the-rockets", response);
+    return;
   } else if (request.url === "/baking-portfolio-images") {
     fs.readdir('assets/images/baking-portfolio/', (error, data) => {
       if (error) {
