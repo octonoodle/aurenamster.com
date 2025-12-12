@@ -43,6 +43,7 @@
   </head>
   <body>
     <h1>meet the rockets</h1>
+    <p><h2 style="display: inline;">★</h2>: rocket is part of the main campaign</p>
     <!-- <section>
       <img src="/images/img-not-found.jpg" alt="" />
       <info>
@@ -65,7 +66,7 @@
   </body>
   <script>
     $.get("/api/read/all/rockets", (rockets) => {
-      rockets = rockets.filter((rock) => rock["flagship?"]);
+      rockets = rockets.filter((rock) => rock["visible?"]);
       rockets = rockets.sort((rock1, rock2) => {
         let date2 = new Date(rock1.build_date_end ?? "2224-01-01");
         let date1 = new Date(rock2.build_date_end ?? "2224-01-01");
@@ -79,7 +80,7 @@
           `<img class="rocket-profile" src="/meet-the-rockets/${id}.webp" onerror="this.src='/meet-the-rockets/unknown-rocket-orange.webp';" />`
         );
         $("#" + id).append("<info></info>");
-        $("#" + id + " info").append(`<h2>${rock.rocket_name}</h2>`);
+        $("#" + id + " info").append(`<h2>${rock["flagship?"] ? '★ ' : ''}${rock.rocket_name}</h2>`);
         $("#" + id + " info").append("<deets></deets>");
         $("#" + id + " info").append("<p></p>");
 
