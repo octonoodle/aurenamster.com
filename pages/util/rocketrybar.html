@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #rocketry-bar {
+        display: flex;
+        background-color: var(--white);
+        filter: brightness(95%);
+        justify-content: space-between;
+        border-width: 0;
+        border-color: var(--border-color);
+        border-bottom-width: var(--border-width);
+        border-style: none;
+      }
+
+      /* #menu-bar {
+        border-style: none;
+      } */
+
+      .main-buttons {
+        flex-wrap: wrap;
+      }
+
+      #rocketry-bar a {
+        display: inline-block;
+      }
+
+      #rocketry-bar h3 {
+        color: var(--accent);
+        height: auto;
+        line-height: auto;
+        text-align: center;
+        font-size: 1.2em;
+        display: flex;
+        height: 27px;
+        padding: 4px;
+        padding-right: 9px;
+        padding-left: 9px;
+        margin: 0;
+        font-weight: normal;
+      }
+      /*
+      #rocketry, #other-stuff h3 {
+        background-color: var(--red);
+      }
+
+      
+      #home h3 {
+        background-color: var(--blue);
+      }
+
+      #rocketry h3 {
+        background-color: var(--red);
+      }
+
+      #programming h3 {
+        background-color: var(--green);
+      }
+
+      #other-stuff h3 {
+        background-color: var(--orange);
+      }
+        */
+    </style>
+  </head>
+  <body>
+    <nav class="rocketry-bar">
+      <div class="main-buttons">
+        <a class="menu-button" id="archive" href="/rocketry/archive">
+          <h3>launch archive</h3> </a
+        ><a class="menu-button" id="meet-the-rockets" href="/rocketry/meet-the-rockets">
+          <h3>meet the rockets</h3> </a
+        ><a class="menu-button" id="avionics" href="/rocketry/avionics">
+          <h3>avionics</h3> </a
+        ><a class="menu-button" id="club" href="/rocketry/club">
+          <h3>club</h3>
+        </a>
+      </div>
+      <div class="other-buttons">
+        <a class="menu-button" id="rocketry2" href="/rocketry">
+          <h3>rocketry top</h3>
+        </a>
+      </div>
+    </nav>
+  </body>
+</html>
