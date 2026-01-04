@@ -40,11 +40,43 @@
         height: clamp(250px, 30vw, 400px);
         border: var(--border-width) solid var(--border-color);
       }
+
+      .rock-section-title {
+        color: var(--accent);
+        font-size: 6vw;
+        font-weight: 550;
+        font-style: italic;
+        margin-top: 60px;
+        margin-bottom: 25px;
+      }
+
+      #page-top-description {
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      #page-top-description p {
+        width: 80vw;
+        text-align: center;
+      }
     </style>
   </head>
   <body>
     <h1>meet the rockets</h1>
-    <p><h2 style="display: inline;">★</h2>: rocket is part of the main campaign</p>
+    <div id="page-top-description">
+    <p >i group a lot of my best rockets into the <a href="#main-campaign">main campaign</a>, 
+      but <a href="#other-rockets">there are some others</a> that don't fit into that category.
+       you can read about all of them below!</p>
+    </div>
+    <div id="main-campaign">
+      <h2 class="rock-section-title">the main campaign</h2>
+    </div>
+    <div id="other-rockets">
+      <h2 class="rock-section-title">other important rockets</h2>
+    </div>
+
     <!-- <section>
       <img src="/images/img-not-found.jpg" alt="" />
       <info>
@@ -74,14 +106,16 @@
         return date1.valueOf() - date2.valueOf();
       });
 
-      for (rock of rockets) {
-        let id = rock.rocket_name.split(/[^\w:\u00C0-\u00FF]/gm).join("-");
-        $("body").append(`<section id="${id}"></section>`);
+      function load_rockets(rockets_input, div_id) {
+      for (rock of rockets_input) {
+        let rock_id = rock.rocket_name.split(/[^\w:\u00C0-\u00FF]/gm).join("-");
+        let id = div_id + " #" + rock_id; // full css selector of the section
+        $("#"+ div_id).append(`<section id="${rock_id}"></section>`);
         $("#" + id).append(
-          `<img class="rocket-profile" src="/meet-the-rockets/${id}.webp" onerror="this.src='/meet-the-rockets/unknown-rocket-orange.webp';" />`
+          `<img class="rocket-profile" src="/meet-the-rockets/${rock_id}.webp" onerror="this.src='/meet-the-rockets/unknown-rocket-orange.webp';" />`
         );
         $("#" + id).append("<info></info>");
-        $("#" + id + " info").append(`<h2>${rock["flagship?"] ? '★ ' : ''}${rock.rocket_name}</h2>`);
+        $("#" + id + " info").append(`<h2> ${/*rock["flagship?"] ? '★ ' : ''}${*/rock.rocket_name}</h2>`);
         $("#" + id + " info").append("<deets></deets>");
         $("#" + id + " info").append("<p></p>");
 
@@ -173,6 +207,12 @@
           }
         );
       }
+      }
+
+      let flagships = rockets.filter(rock => rock["flagship?"]);
+      let others = rockets.filter(rock => !rock["flagship?"]);
+      load_rockets(flagships, "main-campaign");
+      load_rockets(others, "other-rockets");
     });
   </script>
 </html>

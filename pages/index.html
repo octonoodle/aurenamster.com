@@ -55,7 +55,7 @@
       }
 
       /* stuff for ringularity looking correct :( */
-      body {
+      /* body {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -67,6 +67,10 @@
       #menu-bar,
       #ring {
         width: 100vw;
+      } */
+
+      #hole-image-caption {
+        padding-bottom: 30px;
       }
     </style>
   </head>
@@ -87,7 +91,6 @@
     <div id="hole-image-caption">
       <em>my rockets have a major impact. especially on the ground.</em>
     </div>
-    <br><br><br>
     
     <!-- <div id="ring-container">
       <div id="ring-spacer"></div> -->
@@ -156,12 +159,12 @@
       });
     </script> -->
 
-    <script>
+    <!-- <script>
       // enclose menu bar and most of page content in #home-container div
       document.addEventListener("menu-bar-loaded", (e) => {
         document.body.innerHTML = `<div id="home-container">${document.body.innerHTML}</div>`;
         $("#home-container").after(`<div id="ring"><a href="//tzhou.net">← PREV</a>The Ringularity<a href="http://gingery.space">NEXT →</a></div>`);
       });
-    </script>
+    </script> -->
   </body>
 </html>
