@@ -10,3 +10,14 @@ I wrote my webserver from scratch in NodeJS, which includes a custom API for acc
 _note about assets: since assets take up a lot of space, I don't syncronize them to GitHub. they usually live in the_ `./assets` _folder with images are at_ `./assets/images`
 
 <img alt="front page" src="./front-page.png" width=1000>
+
+# todos #
+- /rocketry/archive : login should be logout button
+- refactor api for read/write and readonly
+- raw SQL mode
+- flights "tarc mode" button with some ::hover stuff
+- ::hover var(--complimentary)
+- thumbnail image
+- image gallery
+- first flight/objective / create session redirect bug(s)
+- fix "no flights" ugly/illegible CSS
