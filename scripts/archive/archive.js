@@ -133,6 +133,25 @@ $.get("/api/read/all/launch_sessions", function (sessions) {
       $("#subtitle-area").append(
         '<a class="button-link" id="add-image-button" href="/rocketry/archive/edit/new-image">add images</a>'
       );
+
+      // logout button
+      
+
+      $('body').append(`<button class="button-link" type="button" 
+        onclick="verySpecificallyNamedLogoutFunction()">logout</button>
+        
+        <script>
+        function verySpecificallyNamedLogoutFunction() {
+        millis = Date.now() + 1000 * 60; // 1 minute expiry
+        expiry = new Date(millis);
+        let cookieString =
+          "password=foobar; expires=" +
+          expiry.toUTCString() +
+          "; path=/";
+          document.cookie = cookieString
+        location.href = '/rocketry/archive';
+      }</script>`);
+      $('#login').hide();
     }
   });
 });
