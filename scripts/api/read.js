@@ -8,20 +8,20 @@ module.exports = async function (resource, response) {
     console.log(
       `reading [all] from table: ${resource.table} column(s): ${column}`
     );
-    let results = await database.query(`SELECT ${column} FROM ${resource.table}`, response);
+    let results = await database.queryReadOnly(`SELECT ${column} FROM ${resource.table}`, response);
     return results;
   } else if (resource.pattern === "match") {
     console.log(
       `reading [matched] value "${resource.matchValue}" in column ${resource.column} of table ${resource.table}`
     );
-    let results = await database.query(
+    let results = await database.queryReadOnly(
       `SELECT * FROM ${resource.table} WHERE ${resource.column} = ${resource.matchValue}`,
       response
     );
     return results;
   } else if (resource.pattern === "columns") {
     console.log(`reading [columns] from table: ${resource.table}`);
-    let results = await database.query(
+    let results = await database.queryReadOnly(
       `SELECT column_name, data_type FROM information_schema.columns WHERE table_name = ${resource.table}`,
       response
     );

@@ -16,7 +16,7 @@ module.exports = function (request, response) {
 
       // check for duplicate rows
       database
-        .query(`SELECT * FROM ${table} WHERE ${column}=${value};`)
+        .queryReadOnly(`SELECT * FROM ${table} WHERE ${column}=${value};`)
         .then((results) => {
           if (results) {
             results = JSON.parse(results); // convert to an object
@@ -41,7 +41,7 @@ module.exports = function (request, response) {
             process.stdout.write("[api/delete] ");
             console.log(constructedQuery);
             redirect(table, column, value, response);
-            database.query(constructedQuery);
+            database.queryReadWrite(constructedQuery);
           }
         });
     });
