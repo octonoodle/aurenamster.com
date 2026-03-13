@@ -12,17 +12,17 @@ const localQuerier = new Pool({
 
 const remoteQuerier = new Pool({
   user: "website_write",
-  host: "localhost",
+  host: "/var/run/postgresql",
   database: "rocketry",
-  password: "",
+  //password: "",
   port: 7775,
 });
 
 const remoteQuerierReadOnly = new Pool({
   user: "website_read",
-  host: "localhost",
+  host: "/var/run/postgresql",
   database: "rocketry",
-  password: "",
+  //password: "",
   port: 7775,
 });
 

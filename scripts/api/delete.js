@@ -23,7 +23,7 @@ module.exports = function (request, response) {
           }
           if (!results || results.length === 0) {
             console.log("[api/delete] entry not found, aborting...");
-            get.html("/pages/util/api-results/delete-no-change.html", response);
+            get.html("/util/api-results/delete-no-change.html", response);
             return;
           } else if (results.length >= 2) {
             console.log(
@@ -32,7 +32,7 @@ module.exports = function (request, response) {
             console.log(results);
             console.log(results.length);
             get.html(
-              "/pages/util/api-results/delete-multiple-match.html",
+              "/util/api-results/delete-multiple-match.html",
               response
             );
           } else {

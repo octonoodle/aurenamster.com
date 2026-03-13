@@ -115,7 +115,7 @@ function verifyContinue(request, response, verifiedAction) {
   if (password !== fs.readFileSync("./scripts/api/api.txt").toString()) {
     // validate password
     console.log("[api/auth] password authentication failed, aborting...");
-    get.html("/pages/util/api-results/auth-failed.html", response);
+    get.html("/util/api-results/auth-failed.html", response);
   } else {
     console.log("[api/auth] password authentication success");
     verifiedAction(password);
