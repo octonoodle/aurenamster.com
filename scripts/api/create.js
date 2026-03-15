@@ -28,7 +28,7 @@ module.exports = function (request, response) {
       let constructedQuery = `INSERT INTO ${table} (${keys}) VALUES (${values});`;
       process.stdout.write('[api/create] ');
       console.log(constructedQuery);
-      database.queryReadWrite(constructedQuery);
+      database.query(constructedQuery);
       if (data.session_id) {
         redirect(table, 'session_id', data.session_id, response);
       } else {

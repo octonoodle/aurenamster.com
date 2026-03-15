@@ -6,7 +6,7 @@ const deleter = require("./delete");
 const parse = require("./parse");
 const fs = require("fs");
 const parseCookie = require("../cookies");
-const images = require("./images");
+//const images = require("./images");
 
 /*
 resource indication format
@@ -115,7 +115,7 @@ function verifyContinue(request, response, verifiedAction) {
   if (password !== fs.readFileSync("./scripts/api/api.txt").toString()) {
     // validate password
     console.log("[api/auth] password authentication failed, aborting...");
-    get.html("/util/api-results/auth-failed.html", response);
+    get.html("/pages/util/api-results/auth-failed.html", response);
   } else {
     console.log("[api/auth] password authentication success");
     verifiedAction(password);

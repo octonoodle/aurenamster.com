@@ -29,7 +29,7 @@ module.exports = function (request, response) {
       console.log(updates);
 
       database
-        .queryReadOnly(`SELECT * FROM ${table} WHERE ${column}=${value};`)
+        .query(`SELECT * FROM ${table} WHERE ${column}=${value};`)
         .then((results) => {
             results = JSON.parse(results); // convert to an object
           if (!results || results.length === 0) {
@@ -46,7 +46,7 @@ module.exports = function (request, response) {
             let constructedQuery = `UPDATE ${table} SET ${updates} WHERE ${column}=${value};`;
             process.stdout.write("[api/edit] ");
             console.log(constructedQuery);
-            database.queryReadWrite(constructedQuery);
+            database.query(constructedQuery);
             redirect(table, column, value, response);
           }
         });

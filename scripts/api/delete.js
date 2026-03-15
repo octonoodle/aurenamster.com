@@ -16,14 +16,14 @@ module.exports = function (request, response) {
 
       // check for duplicate rows
       database
-        .queryReadOnly(`SELECT * FROM ${table} WHERE ${column}=${value};`)
+        .query(`SELECT * FROM ${table} WHERE ${column}=${value};`)
         .then((results) => {
           if (results) {
             results = JSON.parse(results); // convert to an object
           }
           if (!results || results.length === 0) {
             console.log("[api/delete] entry not found, aborting...");
-            get.html("/util/api-results/delete-no-change.html", response);
+            get.html("/pages/util/api-results/delete-no-change.html", response);
             return;
           } else if (results.length >= 2) {
             console.log(
@@ -32,7 +32,7 @@ module.exports = function (request, response) {
             console.log(results);
             console.log(results.length);
             get.html(
-              "/util/api-results/delete-multiple-match.html",
+              "/pages/util/api-results/delete-multiple-match.html",
               response
             );
           } else {
@@ -41,7 +41,7 @@ module.exports = function (request, response) {
             process.stdout.write("[api/delete] ");
             console.log(constructedQuery);
             redirect(table, column, value, response);
-            database.queryReadWrite(constructedQuery);
+            database.query(constructedQuery);
           }
         });
     });
