@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>get the csv now!</title>
+    <script src="/client/load-defaults.js"></script>
+    <script src="/client/load-menu-bar.js"></script>
+  </head>
+  <body>
+    <form>
+      <select name="session_id" id="session-select">
+        <option value="-3" selected>sesh -3</option>
+        <option value="-2">sesh -2</option>
+        <option value="-1">sesh -1</option>
+      </select>
+      <br />
+      <select name="launch_id" id="launch-select">
+        <option value="-3">launch -3</option>
+        <option value="-2">launch -2</option>
+        <option value="-1">launch -1</option>
+      </select>
+    </form>
+    <br /><br />
+    <form id="csv-form" action="/api/csv" method="get">
+      <input type="submit" value="submit pls" />
+    </form>
+
+    <script>
+      $(document).ready(function () {
+        async function populateSessions() {
+          let seshes = await $.get("/api/read/all/launch_sessions");
+          seshes.sort((sesh1, sesh2) => {
+            return Date.parse(sesh2.date) - Date.parse(sesh1.date);
+          });
+
+          $("#session-select").html(""); // clear fake options
+          for (sesh of seshes) {
+            let id = sesh.session_id;
+            let date = new Date(sesh.date).toDateString();
+            $("#session-select").append(
+              `<option value="${id}">\"${sesh.synopsis}\" (${date})`,
+            );
+          }
+
+          // pre-populate form with some arbitrary real launch
+          // for now, basically the most recent launch available
+          await populateLaunches();
+          updateFormEndpoint();
+        }
+        populateSessions();
+
+        async function populateLaunches() {
+          let seshId = $("#session-select").val();
+          let launches = await $.get(
+            `/api/read/match/launches/session_id/${seshId}`,
+          );
+          launches.sort((launch1, launch2) => {
+            return Date.parse(launch1.time) - Date.parse(launch2.time);
+          });
+
+          $("#launch-select").html(""); // clear out the filler options
+          for (launch of launches) {
+            let motor = await $.get(
+              `/api/read/match/motors/motor_id/${launch.motor_id}`,
+            );
+            motor = motor[0]; // hack since we know only one motor will match
+            $("#launch-select").append(
+              `<option value="${launch.launch_id}">Launch of "${launch.rocket}" on ${motor.motor_name} (${launch.time})`,
+            );
+          }
+
+          updateFormEndpoint();
+        }
+
+        function updateFormEndpoint() {
+          let newAction = `/api/csv/${$("#launch-select").val()}`;
+          // console.log(newAction);
+          $("#csv-form").attr("action", newAction);
+        }
+
+        $(document).on("change", "#session-select", populateLaunches);
+        $(document).on("change", "#launch-select", updateFormEndpoint);
+      });
+    </script>
+  </body>
+</html>

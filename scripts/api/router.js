@@ -6,6 +6,7 @@ const deleter = require("./delete");
 const parse = require("./parse");
 const fs = require("fs");
 const parseCookie = require("../cookies");
+const csv = require("./csv");
 //const images = require("./images");
 
 /*
@@ -28,7 +29,7 @@ read -> matched results [json]
 create/edit/delete -> 301 redirect to response page (success/failure)
 
 errors:
-- 404 not found
+- 404 not found (or read forbidden)
 - 403 forbidden (failed authentication)
 
 examples:
@@ -84,6 +85,9 @@ function route(request, response) {
     } else {
       read(resource, response);
     }
+  } else if (urlBits[1] === "csv") { // launch csv data
+    console.log("switching to path [csv]");
+    csv(request, response);
   } else if (urlBits[1] === "create") {
     console.log("switching to path [create]");
     verifyContinue(request, response, () => {

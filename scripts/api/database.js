@@ -27,7 +27,7 @@ const querierReadWrite = new Pool({
 
 // wrapper for raw query function
 // optional response parameter for quick raw json response
-async function queryRaw(query, response, queryType) {
+async function queryRaw(query, queryType, response) {
    let theQuerier;
   switch (queryType) {
     case "read-only":
@@ -50,7 +50,7 @@ async function queryRaw(query, response, queryType) {
       get.json(JSON.stringify(results.rows), response);
     } else {
       console.log(`[database/${queryType}/json] returning raw json data`);
-      return JSON.stringify(results.rows);
+      return results.rows;
     }
   } catch (error) {
     console.log(`[database/${queryType}] invalid query: ${query}`);
