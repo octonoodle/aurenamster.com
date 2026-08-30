@@ -76,11 +76,8 @@
           $("#description").html(session.description);
           $("p.synopsis").html(session.synopsis);
           $("#synopsis").attr("value", session.synopsis);
-          setTimeout(function () {
-            let date = new Date(session.date);
-            document.getElementById("date-input").value =
-              date.toLocaleDateString("en-CA");
-          }, 10);
+          let date = new Date(session.date);
+          $("#date-input").attr("value", date.toLocaleDateString("en-CA"));
         }
       );
       $("a").attr("href", "/rocketry/archive/view?id=" + sessionID);

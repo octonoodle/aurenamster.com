@@ -54,12 +54,8 @@
     </form>
   </body>
   <script>
-    let now = new Date();
-    // don't ask
-    setTimeout(function () {
-      document.getElementById("date-input").value =
-        now.toLocaleDateString("en-CA");
-    }, 10);
+    let date = new Date();
+    $("#date-input").attr("value", date.toLocaleDateString("en-CA"));
 
     function formatSubmit() {
       addEscapeChars("synopsis");

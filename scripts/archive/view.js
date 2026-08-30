@@ -84,7 +84,8 @@ function loadLaunches(sessionID, callback) {
   // launches
   $.get("/api/read/match/launches/session_id/" + sessionID, (launches) => {
     if (launches.length == 0) {
-      $("#launches").html("<br>no launches found");
+      $("#launches").before("<br>no launches found");
+      $("#launches").html("");
     } else {
       launches.sort(
         (launch1, launch2) =>

@@ -66,12 +66,9 @@
       let sessionID = params.get("id");
       let definedAltitude = true;
       $(document).ready(() => {
-        let now = new Date();
-        // don't ask
-        setTimeout(function () {
-          document.getElementById("time-input").value =
-            now.toLocaleTimeString("it-IT");
-        }, 10);
+        // round to the nearest minute
+        let now = new Date(Math.floor(Date.now() / 1000 / 60) * 1000 * 60); 
+        $("#time-input").attr("value", now.toLocaleTimeString("it-IT"));
 
         $("form").append(
           '<input type="hidden" name="session_id" id="session_id" value="' +
@@ -109,6 +106,9 @@
         // populate form with data
         $.get("/api/read/all/rockets", (rockets) => {
           $("#rocket-input").empty();
+          rockets.sort((rock1, rock2) => {
+            return Date.parse(rock2.build_date_start) - Date.parse(rock1.build_date_start);
+          });
           for (rocket of rockets) {
             $("#rocket-input").append(
               '<option value="' +
@@ -121,6 +121,9 @@
         });
         $.get("/api/read/all/motors", (motors) => {
           $("#motor").empty();
+          motors.sort((motor1, motor2) => {
+            return motor2.impulse - motor1.impulse;
+          });
           for (motor of motors) {
             $("#motor").append(
               '<option value="' +
@@ -131,9 +134,7 @@
             );
           }
         });
-        setTimeout(function () {
-          $("#session_id").val(sessionID);
-        }, 10);
+        $("#session_id").attr("value", sessionID);
       });
 
       function formatSubmit() {

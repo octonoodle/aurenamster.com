@@ -76,3 +76,17 @@ function niceDate(dbDate) {
     return undefined;
   }
 }
+
+// scroll the page to be centered on element with given id
+function scrollCentered(id) {
+  const rect = document.getElementById(id).getBoundingClientRect();
+  const centerY = ( rect.top + rect.bottom ) / 2;
+  const finalY = centerY - window.innerHeight / 2;
+  console.log(rect);
+  console.log(centerY);
+  console.log(finalY);
+  window.scrollTo({
+        top: finalY,
+        behavior: 'smooth'
+    });
+}
