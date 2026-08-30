@@ -127,8 +127,8 @@
         async function populateSessions() {
           // get only sessions with valid data
           let seshes = await $.get("/api/csv/sessions"); 
-          console.log("seshes!!!");
-          console.log(seshes);
+          // console.log("seshes!!!");
+          // console.log(seshes);
 
           seshes.sort((sesh1, sesh2) => {
             return Date.parse(sesh2.date) - Date.parse(sesh1.date);

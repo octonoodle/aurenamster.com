@@ -208,7 +208,7 @@ function graphMultipleSeries(ids, callback) {
 }
 
 function graphSeries(id, callback) {
-  loadTable("/api/csv/" + id, "csv", "header", (table) => {
+  loadTable("/api/csv/file/" + id, "csv", "header", (table) => {
     // trim table to usable section
     table = trimData(table);
     let data = populateData(table);
