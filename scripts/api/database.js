@@ -27,7 +27,7 @@ const querierReadWrite = new Pool({
 
 // wrapper for raw query function
 // optional response parameter for quick raw json response
-async function queryRaw(query, queryType, response) {
+async function queryRaw(query, response, queryType) {
    let theQuerier;
   switch (queryType) {
     case "read-only":
