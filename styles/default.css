@@ -17,6 +17,8 @@
 
     --border-width: 3px;
     --border-color: hsl(0, 0%, 0%);
+
+    --delete-color: rgb(220, 20, 60);
 }
 
 body {
@@ -75,9 +77,9 @@ p {
     border-width: var(--border-width);
     border-color: var(--border-color);
     border-style: solid;
-  }
+}
 
-  form textarea {
+form textarea {
     width: 70vw;
-    height: 30vh;
-  }
+    height : 30vh;
+}

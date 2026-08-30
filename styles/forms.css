@@ -1,0 +1,21 @@
+/* standard form formatting */
+
+button {
+    display: inline-flex;
+    background-color: var(--dominant);
+    color: #ffffff;
+    padding: 5px;
+    line-height: 20px;
+    font-size: 1.2em;
+    font-family: 'Space Grotesk';
+    white-space: nowrap;
+    overflow: hidden;
+    border: var(--border-color) var(--border-width) solid;
+}
+
+select {
+    border: var(--border-color) var(--border-width) solid;
+    font-family: 'Space Grotesk';
+    font-size: 1em;
+    margin: 2px;
+}

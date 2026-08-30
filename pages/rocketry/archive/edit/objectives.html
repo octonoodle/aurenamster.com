@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -18,7 +18,7 @@
       }
 
       .delete {
-        background-color: crimson;
+        background-color: var(--delete-color);
       }
 
       yay {
@@ -48,14 +48,14 @@
               sessionID +
               "," +
               $(objective).attr("id").replace("objective", "") +
-              ')">delete</a>'
+              ')">delete</a>',
           );
         });
       });
       $("#return-link").attr("href", "/rocketry/archive/view?id=" + sessionID);
       $("#new-objective-link").attr(
         "href",
-        "/rocketry/archive/edit/new-objective?id=" + sessionID
+        "/rocketry/archive/edit/new-objective?id=" + sessionID,
       );
     </script>
   </body>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -30,7 +30,7 @@
       }
 
       .delete a {
-        background-color: crimson;
+        background-color: var(--delete-color);
       }
     </style>
   </head>
@@ -70,14 +70,14 @@
             '<td class="delete"><a class="button-link" href=/rocketry/archive/delete?table=launches' +
               "&column=launch_id&value=" +
               $(row).attr("id").replace("launch", "") +
-              ">delete</a></td>"
+              ">delete</a></td>",
           );
         });
       });
       $("#return-link").attr("href", "/rocketry/archive/view?id=" + sessionID);
       $("#new-launch-link").attr(
         "href",
-        "/rocketry/archive/edit/new-launch?id=" + sessionID
+        "/rocketry/archive/edit/new-launch?id=" + sessionID,
       );
     </script>
   </body>
