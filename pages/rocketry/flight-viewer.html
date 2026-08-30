@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>flight viewer</title>
+    <script src="/client/load-defaults.js"></script>
+    <script src="/client/load-rocketry-bar.js"></script>
+    <script src="/client/load-menu-bar.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.11/lib/p5.min.js"></script>
+
+    <link rel="stylesheet" href="/forms.css" />
+    <style>
+      #visible-launch-table table {
+        width: 75%;
+        /* font-weight: 200; */
+      }
+
+      #launch-table-head {
+        color: var(--complimentary);
+      }
+
+      .delete-button {
+        background-color: var(--delete-color);
+        /* color: var(--white);
+        padding: 10px; */
+      }
+      #add-button {
+        margin-left: 30px;
+      }
+
+      /* [data-valid="false"]#add-button:hover {
+        background-color: gray;
+      } */
+
+      td {
+        text-align: center;
+      }
+
+      #add-options {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        @media only screen and (max-device-width: 480px) {
+          flex-direction: column;
+        }
+        width: 100%;
+      }
+
+      form {
+        /* display: flex; */
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      select {
+        @media only screen and (max-device-width: 480px) {
+          white-space: pre-wrap;
+          max-width: 90vw;
+        }
+      }
+
+      .plot-key-icon {
+        background-color: hotpink;
+        width: 40px;
+        height: 30px;
+        border-radius: 10px;
+      }
+
+      .key-icon-parent {
+        display: flex;
+        justify-content: center;
+      }
+
+      p {
+        width: 60vw;
+      }
+    </style>
+  </head>
+  <body>
+    <div style="display: flex; flex-direction: column; align-items: center">
+      <h1>flight viewer</h1>
+      <p>
+        below is a visualization of the raw flight data collected from my custom
+        rocket altimeters. you can select and compare any flights for which data
+        is available!
+      </p>
+    </div>
+    <br />
+    <main></main>
+    <br />
+    <div id="add-options">
+      <form>
+        <select name="session_id" id="session-select">
+          <option value="-3" selected>sesh -3</option>
+          <option value="-2">sesh -2</option>
+          <option value="-1">sesh -1</option>
+        </select>
+        <br />
+        <select name="launch_id" id="launch-select">
+          <option value="-3">launch -3</option>
+          <option value="-2">launch -2</option>
+          <option value="-1">launch -1</option>
+        </select>
+      </form>
+      <button id="add-button" invalid-option="no data found">add</button>
+    </div>
+    <br />
+    <center id="visible-launch-table">
+      <table>
+        <tr id="launch-table-head">
+          <td>plot color</td>
+          <td>launch id</td>
+          <td>session</td>
+          <td>time</td>
+          <td>motor</td>
+        </tr>
+      </table>
+    </center>
+    <br />
+
+    <script>
+      let displayedLaunchIDs = [];
+
+      $(document).ready(function () {
+        async function populateSessions() {
+          // get only sessions with valid data
+          let seshes = await $.get("/api/csv/sessions"); 
+          console.log("seshes!!!");
+          console.log(seshes);
+
+          seshes.sort((sesh1, sesh2) => {
+            return Date.parse(sesh2.date) - Date.parse(sesh1.date);
+          });
+
+          $("#session-select").html(""); // clear fake options
+          for (sesh of seshes) {
+            let id = sesh.session_id;
+            let date = new Date(sesh.date).toDateString();
+            $("#session-select").append(
+              `<option value="${id}">\"${sesh.synopsis}\" (${date})`,
+            );
+          }
+
+          // pre-populate form with some arbitrary real launch
+          // for now, basically the most recent launch available
+          await populateLaunches();
+        }
+        populateSessions();
+
+        async function populateLaunches() {
+          let seshId = $("#session-select").val();
+          let launches = await $.get(
+            `/api/read/match/launches/session_id/${seshId}`,
+          );
+          launches.sort((launch1, launch2) => {
+            return Date.parse(launch1.time) - Date.parse(launch2.time);
+          });
+
+          $("#launch-select").html(""); // clear out the filler options
+          for (launch of launches) {
+            let motor = await $.get(
+              `/api/read/match/motors/motor_id/${launch.motor_id}`,
+            );
+            motor = motor[0]; // hack since we know only one motor will match
+            $("#launch-select").append(
+              `<option value="${launch.launch_id}">Launch of "${launch.rocket}" on ${motor.motor_name} (${launch.time})`,
+            );
+          }
+        }
+
+        function refreshLaunches() {
+          $("#visible-launch-table").html(`<table><tr id="launch-table-head">
+          <td>plot color</td>
+          <td>launch id</td>
+          <td>session</td>
+          <td>time</td>
+          <td>motor</td>
+        </tr></table>`);
+          if (displayedLaunchIDs.length === 0) {
+            // if (!$("#no-displayed-banner").length) {
+            $("#visible-launch-table").html(
+              `<br><p id="no-displayed-banner">no launches displayed.</p><br>`,
+            );
+            // }
+          } else {
+            $(".delete-button").off();
+            displayedLaunchIDs.map(async (id) => {
+              let launch = await $.get(
+                "/api/read/match/launches/launch_id/" + id,
+              );
+              launch = launch[0];
+              let motor = await $.get(
+                "/api/read/match/motors/motor_id/" + launch.motor_id,
+              );
+              motor = motor[0];
+              $("#visible-launch-table table")
+                .append(`<tr id="launch${launch.launch_id}">
+          <td id="plot-key-${launch.launch_id}" class="key-icon-parent"><div class="plot-key-icon"></div></td>
+          <td>${launch.launch_id}</td>
+          <td>${launch.session_id}</td>
+          <td>${launch.time}</td>
+          <td>${motor.motor_name}</td>
+          <td><button id="button${launch.launch_id}" class="delete-button">delete</button></td>
+        </tr>`);
+              $(`#button${launch.launch_id}`).on(
+                "click",
+                deleteSelf(launch.launch_id),
+              );
+            });
+          }
+        }
+        refreshLaunches(); // run at initalization of the app
+
+        function deleteSelf(id) {
+          return () => {
+            displayedLaunchIDs = displayedLaunchIDs.filter((x) => x != id);
+            $("#launch" + id).remove();
+            regraph();
+          };
+        }
+
+        async function addLaunch() {
+          if (await checkDataExists()) {
+            let newID = $("#launch-select").val();
+            if (!displayedLaunchIDs.includes(newID)) {
+              displayedLaunchIDs.push(newID);
+              //   console.log("added new id to stack " + $("#launch-select").val());
+              refreshLaunches();
+              regraph();
+            }
+          }
+        }
+
+        async function checkDataExists() {
+          let select = document.getElementById("launch-select");
+          let id = select[select.selectedIndex].value;
+          let launch = await $.get("/api/read/match/launches/launch_id/" + id);
+          launch = launch[0];
+          let validity = launch.launch_data_filename ? true : false;
+          $("#add-button").attr("data-valid", validity);
+          return validity;
+        }
+
+        async function regraph() {
+          let launches = await Promise.all(
+            displayedLaunchIDs.map(
+              async (id) =>
+                await $.get("/api/read/match/launches/launch_id/" + id),
+            ),
+          );
+          launches = launches.flat();
+          let max = launches.reduce(
+            (maxSoFar, launch) => Math.max(launch.altitude_m, maxSoFar),
+            0,
+          );
+          ALT_SCALE = 20 + max;
+          seriesCt = 0;
+          finishedGraphing = false;
+        }
+
+        $(document).on("change", "#session-select", populateLaunches);
+        $(document).on("click", "#add-button", addLaunch);
+        $(document).on("mouseenter", "#add-button", checkDataExists);
+
+        // $(document).on("change", "#launch-select", updateFormEndpoint);
+      });
+    </script>
+
+    <script src="/client/flight-viewer.js" defer></script>
+  </body>
+</html>
