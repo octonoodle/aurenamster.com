@@ -114,9 +114,10 @@
       <table>
         <tr id="launch-table-head">
           <td>plot color</td>
-          <td>launch id</td>
-          <td>session</td>
+          <td>date</td>
           <td>time</td>
+          <td>rocket</td>
+          <td>apogee</td>
           <td>motor</td>
         </tr>
       </table>
@@ -179,9 +180,10 @@
         function refreshLaunches() {
           $("#visible-launch-table").html(`<table><tr id="launch-table-head">
           <td>plot color</td>
-          <td>launch id</td>
-          <td>session</td>
+          <td>date</td>
           <td>time</td>
+          <td>rocket</td>
+          <td>apogee</td>
           <td>motor</td>
         </tr></table>`);
           if (displayedLaunchIDs.length === 0) {
@@ -201,12 +203,15 @@
                 "/api/read/match/motors/motor_id/" + launch.motor_id,
               );
               motor = motor[0];
+              let session = await $.get("/api/read/match/launch_sessions/session_id/" + launch.session_id)
+              session = session[0];
               $("#visible-launch-table table")
                 .append(`<tr id="launch${launch.launch_id}">
           <td id="plot-key-${launch.launch_id}" class="key-icon-parent"><div class="plot-key-icon"></div></td>
-          <td>${launch.launch_id}</td>
-          <td>${launch.session_id}</td>
+          <td>${new Date(session.date).toDateString()}</td>
           <td>${launch.time}</td>
+          <td>${launch.rocket}</td>
+          <td>${launch.altitude_m} m</td>
           <td>${motor.motor_name}</td>
           <td><button id="button${launch.launch_id}" class="delete-button">delete</button></td>
         </tr>`);
