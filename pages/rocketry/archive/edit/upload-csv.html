@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>upload CSVs</title>
+    <script src="/client/load-defaults.js"></script>
+    <script src="/client/load-menu-bar.js"></script>
+    <link rel="stylesheet" href="/forms.css" />
+  </head>
+  <body>
+    <h1>upload a csv!</h1>
+    <br /><br />
+    <form action="/api/csv/upload" method="post" enctype="multipart/form-data">
+      <input type="file" name="csv" id="csv-file" />
+      <br />
+      <select name="session_id" id="session-select">
+        <option value="-3" selected>sesh -3</option>
+        <option value="-2">sesh -2</option>
+        <option value="-1">sesh -1</option>
+      </select>
+      <br />
+      <select name="launch_id" id="launch-select">
+        <option value="-3">launch -3</option>
+        <option value="-2">launch -2</option>
+        <option value="-1">launch -1</option>
+      </select>
+      <br />
+      <button>submit</button>
+    </form>
+  </body>
+  <script>
+    async function populateSessionSelect() {
+      let seshes = await $.get("/api/read/all/launch_sessions");
+      seshes.sort((sh1, sh2) => Date.parse(sh2.date) - Date.parse(sh1.date));
+
+      $("#session-select").html("");
+      for (sesh of seshes) {
+        $("#session-select").append(
+          `<option value="${sesh.session_id}">${sesh.synopsis} (${new Date(sesh.date).toLocaleDateString("en-US")})</option>`,
+        );
+      }
+      populateLaunchSelect();
+    }
+    populateSessionSelect();
+
+    async function populateLaunchSelect() {
+        let session_id = $('#session-select').val();
+
+        let launches = await $.get("/api/read/match/launches/session_id/"+session_id);
+      launches.sort((launch1, launch2) =>
+          launch1.time.replace(/:/g, "") - launch2.time.replace(/:/g, ""));
+
+      $("#launch-select").html("");
+      for (launch of launches) {
+        $("#launch-select").append(
+          `<option value="${launch.launch_id}">Launch of ${launch.rocket} at ${launch.time}</option>`,
+        );
+      }
+    }
+
+    $(document).on("change", "#session-select", populateLaunchSelect);
+  </script>
+</html>

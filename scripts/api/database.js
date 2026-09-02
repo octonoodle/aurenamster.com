@@ -57,15 +57,17 @@ async function queryRaw(query, response, queryType) {
     console.log(`[database/${queryType}] produced error: "${error}"`);
     if (response) {
       get.error404(query, response);
+    } else {
+      return error;
     }
   }
 }
 
 function queryReadOnly(query, response) {
-  return queryRaw(query, response, "read-only");
+  return queryRaw(query, response, "local");
 }
 function queryReadWrite(query, response) {
-  return queryRaw(query, response, "read-write");
+  return queryRaw(query, response, "local");
 }
 
 module.exports = { queryReadOnly, queryReadWrite };

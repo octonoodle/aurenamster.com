@@ -4,9 +4,8 @@ const create = require("./create");
 const edit = require("./edit");
 const deleter = require("./delete");
 const parse = require("./parse");
-const fs = require("fs");
-const parseCookie = require("../cookies");
 const csv = require("./csv");
+const verifyContinue = require("./verify");
 //const images = require("./images");
 
 /*
@@ -67,8 +66,6 @@ archive (launch archive) "/api/image/aciton/archive/[session_id]"
 baking (baking portfolio) "/api/image/action/baking"
 */
 
-module.exports = route;
-
 function route(request, response) {
   process.stdout.write("[api/router] ");
   let urlBits = request.url.substring(1).split("/");
@@ -85,43 +82,34 @@ function route(request, response) {
     } else {
       read(resource, response);
     }
-  } else if (urlBits[1] === "csv") { // launch csv data
+  } else if (urlBits[1] === "csv") {
+    // launch csv data
     console.log("switching to path [csv]");
     csv(request, response);
   } else if (urlBits[1] === "create") {
     console.log("switching to path [create]");
     verifyContinue(request, response, () => {
       create(request, response);
-    })
+    });
   } else if (urlBits[1] === "edit") {
     console.log("switching to path [edit]");
     verifyContinue(request, response, () => {
       edit(request, response);
-    })
+    });
   } else if (urlBits[1] === "delete") {
     console.log("switching to path [delete]");
     verifyContinue(request, response, () => {
       deleter(request, response);
-    })
+    });
   } else if (urlBits[1] === "image") {
     console.log("switching to path [image]");
     verifyContinue(request, response, () => {
       images(request, response, urlBits.slice(2)); // remove /api/image
-    })
+    });
   } else {
     console.log(`non-recognized operation ${urlBits[1]}`);
     get.error404(request.url, response);
   }
 }
 
-function verifyContinue(request, response, verifiedAction) {
-  let password = parseCookie(request).password;
-  if (password !== fs.readFileSync("./scripts/api/api.txt").toString()) {
-    // validate password
-    console.log("[api/auth] password authentication failed, aborting...");
-    get.html("/pages/util/api-results/auth-failed.html", response);
-  } else {
-    console.log("[api/auth] password authentication success");
-    verifiedAction(password);
-  }
-}
+module.exports = route;

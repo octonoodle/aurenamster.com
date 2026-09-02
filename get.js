@@ -10,7 +10,7 @@ function serveFile(file, response, contentType) {
       response.writeHead(200, { "Content-Type": contentType });
       response.write(data);
       console.log(
-        "[get] served " + contentType + " '" + file + "' successfully"
+        "[get] served " + contentType + " '" + file + "' successfully",
       );
     }
     response.end();
@@ -41,7 +41,7 @@ function img(file, extension, response) {
   serveFile(
     "/assets/images" + file,
     response,
-    "img/" + extension.substring(1) //dymanically generate mimetype
+    "img/" + extension.substring(1), //dymanically generate mimetype
   );
 }
 
@@ -58,14 +58,14 @@ function pdf(file, response) {
 }
 
 function zip(file, response) {
-    serveFile("/assets" + file, response, "application/zip");
+  serveFile("/assets" + file, response, "application/zip");
 }
 
 // errors
 
 function error403(path, response) {
-    console.log("[get/403] 403 error on path " + path);
-    html("/util/403.html", response);
+  console.log("[get/403] 403 error on path " + path);
+  html("/util/403.html", response);
 }
 
 function error404(path, response) {
@@ -90,7 +90,7 @@ function error415(extension, response) {
   console.log("[get/415] refused to serve file with extension " + extension);
 }
 
-function error503(response) {
+function error503(request, response) {
   response.writeHead(503, { "Content-Type": "text/html" });
   fs.readFile("site-down.html", (error, data) => {
     if (error) {
@@ -102,7 +102,7 @@ function error503(response) {
   });
 
   console.log(
-    "[get/503] ignored url " + request.url + " during server maintenance"
+    "[get/503] ignored url " + request.url + " during server maintenance",
   );
 }
 

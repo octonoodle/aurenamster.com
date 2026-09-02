@@ -81,6 +81,9 @@
   <body>
     <div style="display: flex; flex-direction: column; align-items: center">
       <h1>flight viewer</h1>
+      <a id="csv-portal-button" class="button-link" href="/rocketry/archive/edit/upload-csv"
+        >upload CSVs</a
+      >
       <p>
         below is a visualization of the raw flight data collected from my custom
         rocket altimeters. you can select and compare any flights for which data
@@ -126,7 +129,7 @@
       $(document).ready(function () {
         async function populateSessions() {
           // get only sessions with valid data
-          let seshes = await $.get("/api/csv/sessions"); 
+          let seshes = await $.get("/api/csv/sessions");
           // console.log("seshes!!!");
           // console.log(seshes);
 
@@ -154,9 +157,12 @@
           let launches = await $.get(
             `/api/read/match/launches/session_id/${seshId}`,
           );
-          launches.sort((launch1, launch2) => {
-            return Date.parse(launch1.time) - Date.parse(launch2.time);
-          });
+          launches.sort(
+            (launch1, launch2) =>
+              launch1.time.replace(/:/g, "") - launch2.time.replace(/:/g, ""),
+          );
+
+          launches = launches.filter(laun => laun.launch_data_filename);
 
           $("#launch-select").html(""); // clear out the filler options
           for (launch of launches) {
@@ -265,6 +271,14 @@
         $(document).on("mouseenter", "#add-button", checkDataExists);
 
         // $(document).on("change", "#launch-select", updateFormEndpoint);
+
+        $('#csv-portal-button').hide();
+        $.get("/amiloggedin", (loggedin) => {
+          loggedin = loggedin === "true"; // convert string to bool
+          if (loggedin) {
+            $('#csv-portal-button').show();
+          }
+        });
       });
     </script>
 
