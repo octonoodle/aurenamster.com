@@ -10,3 +10,49 @@ section {
         width: 94vw;
         margin: 5px;
 }
+
+/* 
+
+<div class="img-box">
+    <a href="">
+        <div class="link-box">
+            <img src="" alt="" />
+            <p class="link-text"></p>
+        </div>
+     </a>
+    <h2 class="caption"></h2>
+</div>
+
+*/
+
+.img-box .caption {
+    font-style: italic;
+    margin-top: 5px; /* less than normal */
+}
+
+.img-box img {
+    border: var(--border-width) solid var(--accent);
+    width: 100%;
+}
+
+.img-box .link-box {
+   position: relative;
+   text-align: center;
+}
+
+/* superimpose on image if image is an anchor  */
+.img-box .link-text { 
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  padding: 15px;
+  margin: 0;
+  background-color: color-mix(in srgb, var(--white) 70%, transparent);
+  color: var(--accent);
+  /* opacity: 0.7; */
+  text-decoration: none;
+  font-weight: 600;
+  font-size: max(5vw, 25px);
+}

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -6,22 +6,29 @@
     <title>auren home page</title>
     <script src="/client/load-defaults.js"></script>
     <script src="/client/load-menu-bar.js"></script>
+    <link rel="stylesheet" href="/bloggish.css" />
     <style>
       h1 {
-        font-size: 10vw;
+        font-size: 12vw;
         text-decoration: none;
+        margin-bottom: 0;
       }
 
-      h6 {
+      #page-title h6 {
         font-style: italic;
         font-weight: lighter;
         color: var(--accent);
         font-size: 2.5vw;
         margin: 0;
+        width: calc(100vw-30px); /* centered */
       }
 
       #page-title {
         padding: 10px;
+        @media screen and (max-width: 768px) {
+          margin-bottom: 60px;
+          margin-top: 30px;
+        }
       }
 
       #count-container {
@@ -38,20 +45,18 @@
         padding: 0;
       }
 
-      img {
+      .img-box {
         width: 45vw;
-        border: var(--border-width) solid var(--accent);
+        display: inline-block;
+        padding: 1vw;
+        min-width: 300px;
+        max-width: 50vh;
       }
 
-      .caption {
+      #images {
         display: flex;
+        flex-wrap: wrap;
         justify-content: center;
-      }
-
-      .caption em {
-        text-align: center;
-        display: block;
-        width: 65vw;
       }
 
       /* stuff for ringularity looking correct :( */
@@ -61,16 +66,12 @@
         align-items: center;
         height: 100vh;
         width: 100vw;
-        justify-content: space-between;
-      }
+        justify-content:space-evenly;
+      } */
 
       #menu-bar,
       #ring {
         width: 100vw;
-      } */
-
-      #hole-image-caption {
-        padding-bottom: 30px;
       }
     </style>
   </head>
@@ -78,31 +79,58 @@
   <body>
     <div id="page-title">
       <h1>auren website</h1>
+      <!-- <p>
+        welcome! glad to have you here. i like to build rockets, and some other
+        things.
+      </p> -->
       <h6>
-        "that's alright with me man" <strong>&nbsp;·&nbsp;</strong> © 2024 -
+        "oh, they're mostly functional . . . and always fun!" <strong>&nbsp;·&nbsp;</strong> © 2024 -
         2026
       </h6>
     </div>
-
-    <!-- <p>welcome to auren site, have nice time ok</p> -->
     <br /><br /><br />
-    <a href="/rocketry/meet-the-rockets">
-    <img src="/oops.webp" alt="like the Airplane! poster." />
-    </a>
-    <br />
-    <div id="hole-image-caption">
-      <em>my rockets have a major impact. especially on the ground.</em>
+    <div id="images">
+      <div class="img-box">
+        <a href="/rocketry/meet-the-rockets">
+          <div class="link-box">
+            <img
+              src="/front-page/zoom.jpg"
+              alt="a rocket in flight, with plume."
+            />
+            <h2 class="link-text">meet the rockets!</h2>
+          </div>
+        </a>
+        <p class="caption">
+          i make a lot of rockets. they are all designed and built from scratch
+          by me and my friend <a href="https://gingery.space">Julian</a>. i
+          build each vehicle for a reason, and they each teach me things i
+          didn't expect!
+        </p>
+      </div>
+      <div class="img-box">
+        <a href="/rocketry/archive">
+          <div class="link-box">
+            <img src="/front-page/oops.jpeg" alt="like the Airplane! poster." />
+            <h2 class="link-text">launches</h2>
+          </div>
+        </a>
+        <p class="caption">
+          there are notes on all my launches in the launch archive. they're fun to
+          look back on, and useful–especially when things go wrong!
+        </p>
+      </div>
     </div>
-    
-    <!-- <div id="ring-container">
-      <div id="ring-spacer"></div> -->
-    <!-- </div> -->
-    <!-- <div id="ring">
+
+    <div id="ring-container">
+      <div id="ring-spacer"></div>
+      <!-- </div> -->
+      <!-- <div id="ring">
       <a href="//tzhou.net">← PREV</a>The Ringularity<a
         href="http://gingery.space"
         >NEXT →</a
-      >
-    </div> -->
+      > -->
+      <div id="signature"></div>
+    </div>
     <style>
       #ring-container {
         display: flex;
@@ -112,8 +140,13 @@
         /* max-height: 50vh; */
       }
 
-      #ring-container .spacer {
-        min-height: 200px;
+      #ring-spacer {
+        height: 230px;
+        /* flex-shrink: 1; */
+      }
+
+      #signature {
+        /* min-height: 50px; */
         flex-grow: 1;
       }
 
